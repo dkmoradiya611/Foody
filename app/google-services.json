@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "505180577522",
+    "project_id": "zwagii",
+    "storage_bucket": "zwagii.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505180577522:android:86a445d61a31b652fbba6b",
+        "android_client_info": {
+          "package_name": "com.example.zwagii"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505180577522-2cjr9t1act6o09rqe77ctpuaelqiucul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMxoMIh8CzMtsmm8qiJ9o2rIxk4B04aRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505180577522-2cjr9t1act6o09rqe77ctpuaelqiucul.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
