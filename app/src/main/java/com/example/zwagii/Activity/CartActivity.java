@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +25,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity {
+
+
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_NAME = "name";
+    String name;
+
+
 
     private RecyclerView recyclerView;
     private ArrayList<DataClass> dataList;
@@ -45,6 +54,13 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
 
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+
+        name = sharedPreferences.getString(KEY_NAME,null);
+
+
+
+
         recyclerView = findViewById(R.id.view3);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
@@ -52,7 +68,7 @@ public class CartActivity extends AppCompatActivity {
         adapter = new CartAdapter(this, dataList);
         recyclerView.setAdapter(adapter);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child("DK").child("AddToCart");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
