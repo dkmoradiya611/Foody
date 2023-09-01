@@ -65,6 +65,7 @@
         app:layout_constraintTop_toTopOf="@+id/recyclerPrice1">
 
         <Button
+            android:id="@+id/btncart_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#18a73e"

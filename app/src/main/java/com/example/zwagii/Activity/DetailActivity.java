@@ -157,17 +157,21 @@ public class DetailActivity extends AppCompatActivity {
 
 
         String ab = object.getTitle().toString();
-        String pr = String.valueOf(object.getPrice());
+        String pr = object.getPrice();
+        String sc = object.getScore();
 
         // Get reference to the new subfolder where you want to store the actual URL
         DatabaseReference newSubfolderRef = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("imageURL");
         DatabaseReference newSubfolderRef1 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("title");
         DatabaseReference newSubfolderRef2 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("price");
+        DatabaseReference newSubfolderRef3 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("score");
 
         // Store the actual URL in the new subfolder
         newSubfolderRef.setValue(actualImageUrl.toString());
         newSubfolderRef1.setValue(ab);
         newSubfolderRef2.setValue(pr);
+        newSubfolderRef3.setValue(sc);
+
     }
 
 

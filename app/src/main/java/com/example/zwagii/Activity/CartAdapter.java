@@ -39,6 +39,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
 
         holder.recyclerCaption.setText(dataList.get(position).getTitle());
         holder.recyclerPrice.setText(String.valueOf(dataList.get(position).getPrice()));
+        holder.recyclerScore.setText(String.valueOf(dataList.get(position).getScore()));
         //String sc = String.valueOf(dataList.get(position).getScore());
         //holder.recyclerScore.setText(sc);
 //       holder.recyclerPrice.setText(dataList.get(position).getPrice());
@@ -67,6 +68,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
             recyclerImage = itemView.findViewById(R.id.picCart);
             recyclerCaption = itemView.findViewById(R.id.titleText_cart);
             recyclerPrice = itemView.findViewById(R.id.feeEachItem);
+            recyclerScore = itemView.findViewById(R.id.totalEachItem);
             //recyclerScore = itemView.findViewById(R.id.totalEachItem);
 
 

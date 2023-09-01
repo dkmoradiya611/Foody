@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -22,6 +23,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
+
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_NAME = "name";
+    String name;
+
+
+
 
     FloatingActionButton fab;
     private RecyclerView recyclerView;
@@ -44,6 +53,21 @@ public class MenuActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         searchView=findViewById(R.id.search);
         searchView.clearFocus();
+
+
+
+
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+
+        name = sharedPreferences.getString(KEY_NAME,null);
+
+
+//        Intent intent  = new Intent(MenuActivity.this, MyAdapter.class);
+//        intent.putExtra("un",name);
+//        startActivity(intent);
+
+
+
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Images");
         databaseReference.addValueEventListener(new ValueEventListener() {
