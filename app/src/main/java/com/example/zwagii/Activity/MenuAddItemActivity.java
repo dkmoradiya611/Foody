@@ -98,11 +98,12 @@ public class MenuAddItemActivity extends AppCompatActivity {
         String title = uploadTitle.getText().toString();
         String caption = uploadCaption.getText().toString();
         //String price = uploadPrice.getText().toString();
-        //String price = uploadPrice.getText().toString();
-        Double price = Double.valueOf(uploadPrice.getText().toString());
+        String price = uploadPrice.getText().toString();
+//        Double price = Double.valueOf(uploadPrice.getText().toString());
         int time = Integer.parseInt(uploadTime.getText().toString());
         int energy = Integer.parseInt(uploadEnergy.getText().toString());
-        Double score = Double.valueOf(uploadScore.getText().toString());
+        String score = uploadScore.getText().toString();
+//        Double score = Double.valueOf(uploadScore.getText().toString());
 
         final StorageReference imageReference = storageReference.child("images/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
 

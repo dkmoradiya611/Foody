@@ -11,16 +11,16 @@ public class DataClass implements Serializable {
    // private String price;
 
 
-    private double price;
+    private String price;
     private int time;
     private int energy;
-    private double score;
+    private String score;
     private int numberInCart;
 
     public DataClass() {
     }
 
-    public DataClass(String title, String imageURL, String caption, double price, int time, int energy, double score) {
+    public DataClass(String title, String imageURL, String caption, String price, int time, int energy, String score) {
         this.title = title;
         this.imageURL = imageURL;
         this.caption = caption;
@@ -55,11 +55,11 @@ public class DataClass implements Serializable {
         this.caption = caption;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -79,11 +79,11 @@ public class DataClass implements Serializable {
         this.energy = energy;
     }
 
-    public double getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(String score) {
         this.score = score;
     }
 

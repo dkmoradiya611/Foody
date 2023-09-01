@@ -88,12 +88,14 @@ public class DetailActivity extends AppCompatActivity {
         calTxt.setText(object.getEnergy() + "Cal");
         startTxt.setText(object.getScore() + "");
         timeTxt.setText(object.getTime() + "min");
-        addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * object.getPrice()));
+        Double a = Double.valueOf(object.getPrice());
+        addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * a));
 
         plusBtn.setOnClickListener(v -> {
             numberOrder = numberOrder + 1;
             numberOrderTxt.setText("" + numberOrder);
-            addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * object.getPrice()));
+            Double b = Double.valueOf(object.getPrice());
+            addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * b));
         });
 
         minusBtn.setOnClickListener(v -> {
@@ -102,7 +104,8 @@ public class DetailActivity extends AppCompatActivity {
             } else {
                 numberOrder = numberOrder - 1;
                 numberOrderTxt.setText("" + numberOrder);
-                addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * object.getPrice()));
+                Double c = Double.valueOf(object.getPrice());
+                addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * c));
             }
         });
 
@@ -154,12 +157,17 @@ public class DetailActivity extends AppCompatActivity {
 
 
         String ab = object.getTitle().toString();
+        String pr = String.valueOf(object.getPrice());
 
         // Get reference to the new subfolder where you want to store the actual URL
         DatabaseReference newSubfolderRef = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("imageURL");
+        DatabaseReference newSubfolderRef1 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("title");
+        DatabaseReference newSubfolderRef2 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("price");
 
         // Store the actual URL in the new subfolder
         newSubfolderRef.setValue(actualImageUrl.toString());
+        newSubfolderRef1.setValue(ab);
+        newSubfolderRef2.setValue(pr);
     }
 
 

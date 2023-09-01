@@ -37,12 +37,12 @@ public class HighAdapter extends RecyclerView.Adapter<HighAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull HighAdapter.MyViewHolder holder, int position) {
         Glide.with(context).load(dataList.get(position).getImageURL()).into(holder.recyclerImage);
-        String pr = String.valueOf(dataList.get(position).getPrice());
+//        String pr = String.valueOf(dataList.get(position).getPrice());
         holder.recyclerCaption.setText(dataList.get(position).getCaption());
-        holder.recyclerPrice.setText(pr);
+//        holder.recyclerPrice.setText(pr);
         //String sc = String.valueOf(dataList.get(position).getScore());
         //holder.recyclerScore.setText(sc);
-//        holder.recyclerPrice.setText(dataList.get(position).getPrice());
+        holder.recyclerPrice.setText(dataList.get(position).getPrice());
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

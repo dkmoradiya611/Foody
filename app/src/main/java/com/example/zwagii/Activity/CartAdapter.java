@@ -36,12 +36,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.MyViewHolder holder, int position) {
         Glide.with(context).load(dataList.get(position).getImageURL()).into(holder.recyclerImage);
-//        String pr = String.valueOf(dataList.get(position).getPrice());
-//        holder.recyclerCaption.setText(dataList.get(position).getCaption());
-//        holder.recyclerPrice.setText(pr);
+
+        holder.recyclerCaption.setText(dataList.get(position).getTitle());
+        holder.recyclerPrice.setText(String.valueOf(dataList.get(position).getPrice()));
         //String sc = String.valueOf(dataList.get(position).getScore());
         //holder.recyclerScore.setText(sc);
-//        holder.recyclerPrice.setText(dataList.get(position).getPrice());
+//       holder.recyclerPrice.setText(dataList.get(position).getPrice());
 
 
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +65,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             recyclerImage = itemView.findViewById(R.id.picCart);
-//            recyclerCaption = itemView.findViewById(R.id.titleTxt1);
-//            recyclerPrice = itemView.findViewById(R.id.timeTxt);
+            recyclerCaption = itemView.findViewById(R.id.titleText_cart);
+            recyclerPrice = itemView.findViewById(R.id.feeEachItem);
             //recyclerScore = itemView.findViewById(R.id.totalEachItem);
 
 
