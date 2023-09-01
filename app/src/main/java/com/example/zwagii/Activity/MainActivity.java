@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,12 @@ import java.util.ArrayList;
 public class  MainActivity extends AppCompatActivity {
 //    private RecyclerView.Adapter adapterFoodList;
 //    private RecyclerView recyclerViewFood;
+
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_NAME = "name";
+
+
     private RecyclerView recyclerView;
     private ArrayList<DataClass> dataList;
     private HighAdapter adapter;
@@ -54,13 +61,31 @@ public class  MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+
+        String name = sharedPreferences.getString(KEY_NAME,null);
+
+        if(name != null )
+        {
+            //tvuname.setText(name);
+        }
+
+
+
         Fauth=FirebaseAuth.getInstance();
         logout=findViewById(R.id.btnlogout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                editor.apply();
+                finish();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                FirebaseAuth.getInstance().signOut();
+
             }
         });
 //        user=Fauth.getCurrentUser();
@@ -114,10 +139,10 @@ public class  MainActivity extends AppCompatActivity {
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
         // Replace "desiredUsername" with the username you want to fetch the image for
-        Intent intent = getIntent();
-        usernameUser = intent.getStringExtra("username");
-        tvuname.setText(usernameUser);
-        String desiredUsername = usernameUser;
+//        Intent intent = getIntent();
+//        usernameUser = intent.getStringExtra("username");
+        tvuname.setText(name);
+        String desiredUsername = name;
 
         // Retrieve the user's image URL
         usersRef.orderByChild("username").equalTo(desiredUsername).addListenerForSingleValueEvent(new ValueEventListener() {

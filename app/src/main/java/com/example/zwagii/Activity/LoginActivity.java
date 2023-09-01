@@ -1,6 +1,7 @@
 package com.example.zwagii.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +29,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ktx.Firebase;
 
 public class LoginActivity extends AppCompatActivity {
+
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_NAME = "name";
+
+
+
     EditText loginUsername, loginPassword;
     Button loginButton;
     TextView signupRedirectText;
@@ -44,6 +52,17 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+
+
+        String name = sharedPreferences.getString(KEY_NAME,null);
+        if(name != null){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+
 
         loginUsername = findViewById(R.id.login_username);
         loginPassword = findViewById(R.id.login_password);
@@ -66,7 +85,10 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user=Fauth.getCurrentUser();
                             assert user!=null;
                             if (user.isEmailVerified()){
-                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                //startActivity(new Intent(LoginActivity.this,MainActivity.class));
+
+
+
                             }else {
                                 Toast.makeText(LoginActivity.this, "Please Verify Email", Toast.LENGTH_SHORT).show();
 
@@ -74,6 +96,13 @@ public class LoginActivity extends AppCompatActivity {
 //                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
 //                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }else {
+                            SharedPreferences.Editor editor= sharedPreferences.edit();
+                            editor.putString(KEY_NAME,loginUsername.getText().toString());
+                            //editor.putString(KEY_PWD,edtpwd.getText().toString());
+                            editor.apply();
+
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
                             Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                         }
                     }
