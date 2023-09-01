@@ -48,7 +48,7 @@ public class  MainActivity extends AppCompatActivity {
     ImageView showProfilePic;
     String usernameUser;
 
-    TextView tvuname;
+    TextView tvuname,viewAll;
     final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
     //private FirebaseDatabase database;
@@ -63,7 +63,7 @@ public class  MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
+        viewAll = findViewById(R.id.tvall);
 
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
@@ -232,6 +232,16 @@ public class  MainActivity extends AppCompatActivity {
 
 
         menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                String path = "Images";
+                intent.putExtra("path",path);
+                startActivity(intent);
+            }
+        });
+
+        viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,MenuActivity.class);
