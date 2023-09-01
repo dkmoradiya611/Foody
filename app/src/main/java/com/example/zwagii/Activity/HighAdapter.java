@@ -17,14 +17,14 @@ import com.example.zwagii.R;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-    public class HighAdapter extends RecyclerView.Adapter<HighAdapter.MyViewHolder> {
+public class HighAdapter extends RecyclerView.Adapter<HighAdapter.MyViewHolder> {
     private ArrayList<DataClass> dataList;
     private Context context;
 
-        public HighAdapter() {
-        }
+    public HighAdapter() {
+    }
 
-        public HighAdapter(Context context, ArrayList<DataClass> dataList) {
+    public HighAdapter(Context context, ArrayList<DataClass> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -49,7 +49,8 @@ import java.util.ArrayList;
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(holder.itemView.getContext(), DetailActivity.class);
-                    intent.putExtra("object",dataList.get(holder.getAdapterPosition()));
+                intent.putExtra("object",dataList.get(holder.getAdapterPosition()));
+
                 holder.itemView.getContext().startActivity(intent);
             }
         });
