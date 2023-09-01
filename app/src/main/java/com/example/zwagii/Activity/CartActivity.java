@@ -1,10 +1,12 @@
 package com.example.zwagii.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,11 +15,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zwagii.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity {
 
-    private RecyclerView.Adapter adapter;
-    private RecyclerView recyclerViewList;
+    private RecyclerView recyclerView;
+    private ArrayList<DataClass> dataList;
+    private CartAdapter adapter;
+    
+//    private RecyclerView.Adapter adapter;
+//    private RecyclerView recyclerView;
 //    private ManagementCart managementCart;
     private TextView totalFeeTxt,taxTxt,deliveryTxt,totaltxt,emptyTxt;
     private double tax;
@@ -30,6 +43,32 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+
+        recyclerView = findViewById(R.id.view3);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        dataList = new ArrayList<>();
+        adapter = new CartAdapter(this, dataList);
+        recyclerView.setAdapter(adapter);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child("DK").child("AddToCart");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
+                    dataList.add(dataClass);
+                }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+
 
 //        managementCart = new ManagementCart(this);
         initView();
@@ -62,7 +101,7 @@ public class CartActivity extends AppCompatActivity {
 
     public void initList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        recyclerViewList.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
 //        adapter = new CartListAdapter(managementCart.getListCart(),this, new ChnageNumberItemsListener() {
 //            @Override
 //            public void changed() {
@@ -70,7 +109,7 @@ public class CartActivity extends AppCompatActivity {
 //            }
 //        });
 //
-//        recyclerViewList.setAdapter(adapter);
+//        recyclerView.setAdapter(adapter);
 //
 //        if(managementCart.getListCart().isEmpty()){
 //            emptyTxt.setVisibility(View.VISIBLE);
@@ -115,7 +154,7 @@ public class CartActivity extends AppCompatActivity {
         taxTxt = findViewById(R.id.taxTxt);
         deliveryTxt = findViewById(R.id.deliveryTxt);
         totaltxt = findViewById(R.id.totalTxt);
-        recyclerViewList = findViewById(R.id.view3);
+        recyclerView = findViewById(R.id.view3);
         scrollView = findViewById(R.id.scrollViewCart);
         backBtn = findViewById(R.id.backBtn);
         orderBtn = findViewById(R.id.orderBtn);
