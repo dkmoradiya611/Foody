@@ -46,7 +46,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(dataList.get(position).getImageURL()).into(holder.recyclerImage);
 
-        holder.recyclerCaption.setText(dataList.get(position).getCaption());
+        holder.recyclerCaption.setText(dataList.get(position).getTitle());
         holder.recyclerPrice.setText(dataList.get(position).getPrice());
         holder.recyclerScore.setText(dataList.get(position).getScore());
 //        holder.recyclerPrice.setText(dataList.get(position).getPrice());

@@ -14,9 +14,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.zwagii.R;
@@ -30,19 +33,71 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MenuAddItemActivity extends AppCompatActivity {
+
+    Spinner spinner;
+    List<String> items;
+    String item;
+
+
     private FloatingActionButton uploadButton;
     private ImageView uploadImage;
     EditText uploadTitle,uploadCaption,uploadPrice,uploadTime,uploadEnergy,uploadScore;
     ProgressBar progressBar;
     private Uri imageUri;
-    final  private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Images");
-    final private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+     DatabaseReference databaseReference;
+      StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_add_item);
+
+
+        spinner =findViewById(R.id.spinner);
+
+        items = new ArrayList<>();
+        items.add(0,"Food Category");
+        items.add("Pizza");
+        items.add("Burger");
+        items.add("Hotdog");
+        items.add("Drinks");
+        items.add("General");
+        spinner.setAdapter(new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,items));
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //1st Method
+                //item = items.get(position);
+
+                //2nd Method
+                if(!(spinner.getSelectedItem().toString() == "Food Category"))
+                {
+                    item = spinner.getSelectedItem().toString();
+                    Toast.makeText(MenuAddItemActivity.this, item, Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+
+
+
         uploadButton = findViewById(R.id.uploadButton);
         uploadTitle = findViewById(R.id.uploadTitle);
         uploadCaption = findViewById(R.id.uploadCaption);
@@ -95,48 +150,394 @@ public class MenuAddItemActivity extends AppCompatActivity {
     }
     //Outside onCreate
     private void uploadToFirebase(Uri imageUri){
-        String title = uploadTitle.getText().toString();
-        String caption = uploadCaption.getText().toString();
-        //String price = uploadPrice.getText().toString();
-        String price = uploadPrice.getText().toString();
+
+        if (spinner.getSelectedItem().toString() == "General") {
+
+            String title = uploadTitle.getText().toString();
+            String caption = uploadCaption.getText().toString();
+            //String price = uploadPrice.getText().toString();
+            String price = uploadPrice.getText().toString();
 //        Double price = Double.valueOf(uploadPrice.getText().toString());
-        int time = Integer.parseInt(uploadTime.getText().toString());
-        int energy = Integer.parseInt(uploadEnergy.getText().toString());
-        String score = uploadScore.getText().toString();
+            int time = Integer.parseInt(uploadTime.getText().toString());
+            int energy = Integer.parseInt(uploadEnergy.getText().toString());
+            String score = uploadScore.getText().toString();
 //        Double score = Double.valueOf(uploadScore.getText().toString());
 
-        final StorageReference imageReference = storageReference.child("images/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
+            StorageReference imageReference = storageReference.child("images/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
 
-        imageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
-                        String key = databaseReference.push().getKey();
-                        databaseReference.child(title).setValue(dataClass);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(MenuAddItemActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MenuAddItemActivity.this, MenuActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                progressBar.setVisibility(View.VISIBLE);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(MenuAddItemActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
+            imageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Images");
+                            String key = databaseReference.push().getKey();
+                            databaseReference.child(title).setValue(dataClass);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(MenuAddItemActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(MenuAddItemActivity.this, MenuActivity.class);
+//                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(MenuAddItemActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+        else if (spinner.getSelectedItem().toString() == "Pizza") {
+
+            String title = uploadTitle.getText().toString();
+            String caption = uploadCaption.getText().toString();
+            //String price = uploadPrice.getText().toString();
+            String price = uploadPrice.getText().toString();
+//        Double price = Double.valueOf(uploadPrice.getText().toString());
+            int time = Integer.parseInt(uploadTime.getText().toString());
+            int energy = Integer.parseInt(uploadEnergy.getText().toString());
+            String score = uploadScore.getText().toString();
+//        Double score = Double.valueOf(uploadScore.getText().toString());
+
+            StorageReference imageReference = storageReference.child("images/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+
+            imageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Images");
+                            String key = databaseReference.push().getKey();
+                            databaseReference.child(title).setValue(dataClass);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(MenuAddItemActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(MenuAddItemActivity.this, MenuActivity.class);
+//                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(MenuAddItemActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+
+
+            StorageReference imageReference2 = storageReference.child("pizza/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+
+            imageReference2.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Pizzas");
+                            String key = databaseReference.push().getKey();
+                            databaseReference.child(title).setValue(dataClass);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(MenuAddItemActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(MenuAddItemActivity.this, MenuActivity.class);
+//                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(MenuAddItemActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }else if (spinner.getSelectedItem().toString() == "Burger") {
+
+            String title = uploadTitle.getText().toString();
+            String caption = uploadCaption.getText().toString();
+            //String price = uploadPrice.getText().toString();
+            String price = uploadPrice.getText().toString();
+//        Double price = Double.valueOf(uploadPrice.getText().toString());
+            int time = Integer.parseInt(uploadTime.getText().toString());
+            int energy = Integer.parseInt(uploadEnergy.getText().toString());
+            String score = uploadScore.getText().toString();
+//        Double score = Double.valueOf(uploadScore.getText().toString());
+
+            StorageReference imageReference = storageReference.child("images/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+
+            imageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Images");
+                            String key = databaseReference.push().getKey();
+                            databaseReference.child(title).setValue(dataClass);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(MenuAddItemActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(MenuAddItemActivity.this, MenuActivity.class);
+//                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(MenuAddItemActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+
+
+            StorageReference imageReference2 = storageReference.child("burger/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+
+            imageReference2.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Burgers");
+                            String key = databaseReference.push().getKey();
+                            databaseReference.child(title).setValue(dataClass);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(MenuAddItemActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(MenuAddItemActivity.this, MenuActivity.class);
+//                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(MenuAddItemActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }else if (spinner.getSelectedItem().toString() == "Hotdog") {
+
+            String title = uploadTitle.getText().toString();
+            String caption = uploadCaption.getText().toString();
+            //String price = uploadPrice.getText().toString();
+            String price = uploadPrice.getText().toString();
+//        Double price = Double.valueOf(uploadPrice.getText().toString());
+            int time = Integer.parseInt(uploadTime.getText().toString());
+            int energy = Integer.parseInt(uploadEnergy.getText().toString());
+            String score = uploadScore.getText().toString();
+//        Double score = Double.valueOf(uploadScore.getText().toString());
+
+            StorageReference imageReference = storageReference.child("images/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+
+            imageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Images");
+                            String key = databaseReference.push().getKey();
+                            databaseReference.child(title).setValue(dataClass);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(MenuAddItemActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(MenuAddItemActivity.this, MenuActivity.class);
+//                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(MenuAddItemActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+
+
+            StorageReference imageReference2 = storageReference.child("hotdog/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+
+            imageReference2.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Hotdog");
+                            String key = databaseReference.push().getKey();
+                            databaseReference.child(title).setValue(dataClass);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(MenuAddItemActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(MenuAddItemActivity.this, MenuActivity.class);
+//                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(MenuAddItemActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }else if (spinner.getSelectedItem().toString() == "Drinks") {
+
+            String title = uploadTitle.getText().toString();
+            String caption = uploadCaption.getText().toString();
+            //String price = uploadPrice.getText().toString();
+            String price = uploadPrice.getText().toString();
+//        Double price = Double.valueOf(uploadPrice.getText().toString());
+            int time = Integer.parseInt(uploadTime.getText().toString());
+            int energy = Integer.parseInt(uploadEnergy.getText().toString());
+            String score = uploadScore.getText().toString();
+//        Double score = Double.valueOf(uploadScore.getText().toString());
+
+            StorageReference imageReference = storageReference.child("images/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+
+            imageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Images");
+                            String key = databaseReference.push().getKey();
+                            databaseReference.child(title).setValue(dataClass);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(MenuAddItemActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(MenuAddItemActivity.this, MenuActivity.class);
+//                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(MenuAddItemActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+
+
+            StorageReference imageReference2 = storageReference.child("drinks/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+
+            imageReference2.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Drinks");
+                            String key = databaseReference.push().getKey();
+                            databaseReference.child(title).setValue(dataClass);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(MenuAddItemActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(MenuAddItemActivity.this, MenuActivity.class);
+//                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(MenuAddItemActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+
+
+
+
+
+
+
     }
     private String getFileExtension(Uri imageUri){
         ContentResolver contentResolver = getContentResolver();

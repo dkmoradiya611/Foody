@@ -67,9 +67,11 @@ public class MenuActivity extends AppCompatActivity {
 //        startActivity(intent);
 
 
+        Intent intent = getIntent();
+        String pa = intent.getStringExtra("path");
 
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Images");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(pa);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override

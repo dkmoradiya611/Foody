@@ -202,6 +202,7 @@
                     android:orientation="horizontal">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cat_pizza"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
@@ -231,6 +232,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cat_burger"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
@@ -260,6 +262,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cat_hotdog"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
@@ -289,6 +292,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cat_drinks"
                         android:layout_width="0dp"
                         android:layout_height="80dp"
                         android:layout_margin="8dp"

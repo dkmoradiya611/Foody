@@ -2,6 +2,7 @@ package com.example.zwagii.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,6 +61,9 @@ public class  MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
@@ -168,12 +172,56 @@ public class  MainActivity extends AppCompatActivity {
         LinearLayout menuBtn = findViewById(R.id.menuBtn);
         LinearLayout settingBtn = findViewById(R.id.settingBtn);
 
+
+        ConstraintLayout cat_pizza = findViewById(R.id.cat_pizza);
+        ConstraintLayout cat_burger = findViewById(R.id.cat_burger);
+        ConstraintLayout cat_hotdog = findViewById(R.id.cat_hotdog);
+        ConstraintLayout cat_drinks = findViewById(R.id.cat_drinks);
+
 //        homeBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                startActivity(new Intent(MainActivity.this,MainActivity.class));
 //            }
 //        });
+
+
+        cat_pizza.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                String path = "Pizzas";
+                intent.putExtra("path",path);
+                startActivity(intent);
+            }
+        });
+        cat_burger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                String path = "Burgers";
+                intent.putExtra("path",path);
+                startActivity(intent);
+            }
+        });
+        cat_hotdog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                String path = "Hotdog";
+                intent.putExtra("path",path);
+                startActivity(intent);
+            }
+        });
+        cat_drinks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                String path = "Drinks";
+                intent.putExtra("path",path);
+                startActivity(intent);
+            }
+        });
 
         cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,7 +234,10 @@ public class  MainActivity extends AppCompatActivity {
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,MenuActivity.class));
+                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                String path = "Images";
+                intent.putExtra("path",path);
+                startActivity(intent);
             }
         });
 
@@ -216,4 +267,7 @@ public class  MainActivity extends AppCompatActivity {
 //        adapterFoodList = new FoodListAdapter(items);
 //        recyclerViewFood.setAdapter(adapterFoodList);
     }
+
+
+
 }
