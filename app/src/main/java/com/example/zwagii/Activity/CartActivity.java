@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -42,6 +43,8 @@ public class CartActivity extends AppCompatActivity {
 //    private RecyclerView recyclerView;
 //    private ManagementCart managementCart;
     private TextView totalFeeTxt,taxTxt,deliveryTxt,totaltxt,emptyTxt;
+    private TextView plusBtn, minusBtn,numberItemCarttxt;
+    private int numberOrder = 1;
     private double tax;
     private ScrollView scrollView;
     private ImageView backBtn;
@@ -91,7 +94,30 @@ public class CartActivity extends AppCompatActivity {
         initList();
         calculateCart();
         setVariable();
-        
+
+//        Intent intent = getIntent();
+//        String pri = intent.getStringExtra("pri");
+//        int ps = Integer.parseInt(pri.toString());
+//
+//        plusBtn.setOnClickListener(v -> {
+//            numberOrder = numberOrder + 1;
+//            numberItemCarttxt.setText("" + numberOrder);
+////            Double b = Double.valueOf(object.getPrice());
+//            numberItemCarttxt.setText("Add to cart - $" + Math.round(numberOrder * ps));
+//        });
+//
+//        minusBtn.setOnClickListener(v -> {
+//            if (numberOrder <= 1) {
+//                numberItemCarttxt.setText("1");
+//            } else {
+//                numberOrder = numberOrder - 1;
+//                numberItemCarttxt.setText("" + numberOrder);
+////                Double c = Double.valueOf(object.getPrice());
+//                totaltxt.setText("Add to cart - $" + Math.round(numberOrder * ps));
+//            }
+//        });
+
+
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +201,7 @@ public class CartActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.backBtn);
         orderBtn = findViewById(R.id.orderBtn);
         emptyTxt = findViewById(R.id.emptyTxt);
+
 
     }
 }

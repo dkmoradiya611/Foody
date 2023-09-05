@@ -119,6 +119,8 @@ public class DetailActivity extends AppCompatActivity {
             Intent intent=new Intent(DetailActivity.this,CartActivity.class);
             //intent.putExtra("title",object.getTitle());
 //            uploadToFirebase();
+            intent.putExtra("pri",object.getPrice());
+
 
             convertAndStoreImageURL();
             startActivity(intent);
