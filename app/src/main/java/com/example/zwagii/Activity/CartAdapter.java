@@ -20,7 +20,8 @@ import java.util.ArrayList;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
     private ArrayList<DataClass> dataList;
     private Context context;
-    public int numberOrder = 1;
+    public int a = 1;
+
 
     public CartAdapter() {
     }
@@ -45,25 +46,47 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
 
 
 
+        holder.plusBtn.setOnClickListener(new View.OnClickListener() {
+            public int numberOrder = 1;
 
-//        holder.plusBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                numberOrder  += 1;
-////                holder.recyclerPrice.setText(String.valueOf(dataList.get(position).getPrice()));
-//                int ps = Integer.parseInt(dataList.get(position).getPrice().toString());
-//
-//
-//
-//                holder.numberItemCarttxt.setText("" + numberOrder);
-////            Double b = Double.valueOf(object.getPrice());
-//
-//
-//                holder.totaltxt.setText("$"+ Math.round(numberOrder * ps));
-//
-//            }
-//        });
+            @Override
+            public void onClick(View v) {
+
+                numberOrder  += 1;
+//                holder.recyclerPrice.setText(String.valueOf(dataList.get(position).getPrice()));
+                int ps = Integer.parseInt(dataList.get(position).getPrice().toString());
+
+
+
+                holder.numberItemCarttxt.setText("" + numberOrder);
+//            Double b = Double.valueOf(object.getPrice());
+
+
+                holder.totaltxt.setText("$"+ Math.round(numberOrder * ps));
+                a +=1;
+
+            }
+        });
+
+        holder.minusBtn.setOnClickListener(new View.OnClickListener() {
+            int numberOrder = Integer.parseInt(holder.numberItemCarttxt.getText().toString());
+
+            @Override
+            public void onClick(View v) {
+                a  -= 1;
+//                holder.recyclerPrice.setText(String.valueOf(dataList.get(position).getPrice()));
+                int ps = Integer.parseInt(dataList.get(position).getPrice().toString());
+
+
+
+                holder.numberItemCarttxt.setText("" + a);
+//            Double b = Double.valueOf(object.getPrice());
+
+
+                holder.totaltxt.setText("$"+ Math.round(a * ps));
+
+            }
+        });
 
 //
 //        public void plusNumberFood(ArrayList<FoodDomain> listfood,int position, ChnageNumberItemsListener chnageNumberItemsListener){
