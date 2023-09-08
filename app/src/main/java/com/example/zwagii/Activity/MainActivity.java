@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         // Replace "desiredUsername" with the username you want to fetch the image for
 //        Intent intent = getIntent();
 //        usernameUser = intent.getStringExtra("username");
-        tvuname.setText(userName);
+        tvuname.setText(name);
         String desiredUsername = name;
 
 
