@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                         }else {
                             SharedPreferences.Editor editor= sharedPreferences.edit();
                             editor.putString(KEY_NAME,loginUsername.getText().toString());
-                            editor.putString(KEY_ROLE,selectedOption.toString());
+                            editor.putString(KEY_ROLE, selectedOption.trim());
                             //editor.putString(KEY_PWD,edtpwd.getText().toString());
                             editor.apply();
 

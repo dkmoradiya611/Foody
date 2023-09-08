@@ -31,17 +31,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class  MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 //    private RecyclerView.Adapter adapterFoodList;
 //    private RecyclerView recyclerViewFood;
 
-    String user,usern,userName,userEmail,userPassword;
+    String user, usern, userName, userEmail, userPassword;
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
     private static final String KEY_ROLE = "role";
 
-    String name,role;
+    String name, role;
     private RecyclerView recyclerView;
     private ArrayList<DataClass> dataList;
     private HighAdapter adapter;
@@ -50,7 +50,7 @@ public class  MainActivity extends AppCompatActivity {
     ImageView showProfilePic;
     String usernameUser;
 
-    TextView tvuname,viewAll;
+    TextView tvuname, viewAll;
     final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
     //private FirebaseDatabase database;
@@ -68,10 +68,10 @@ public class  MainActivity extends AppCompatActivity {
         viewAll = findViewById(R.id.tvall);
 
 
-        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
-         name = sharedPreferences.getString(KEY_NAME,null);
-         role = sharedPreferences.getString(KEY_ROLE,null);
+        name = sharedPreferences.getString(KEY_NAME, null);
+        role = sharedPreferences.getString(KEY_ROLE, null);
 //
 //        if(name != null )
 //        {
@@ -79,9 +79,8 @@ public class  MainActivity extends AppCompatActivity {
 //        }
 
 
-
-        Fauth=FirebaseAuth.getInstance();
-        logout=findViewById(R.id.btnlogout);
+        Fauth = FirebaseAuth.getInstance();
+        logout = findViewById(R.id.btnlogout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +105,7 @@ public class  MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_high);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         dataList = new ArrayList<>();
         adapter = new HighAdapter(this, dataList);
         recyclerView.setAdapter(adapter);
@@ -121,6 +120,7 @@ public class  MainActivity extends AppCompatActivity {
                 }
                 adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -130,12 +130,11 @@ public class  MainActivity extends AppCompatActivity {
         ArrayList<SlideModel> imageList = new ArrayList<>();
 
         imageList.add(new SlideModel(R.drawable.banner1, ScaleTypes.CENTER_CROP));
-        imageList.add(new SlideModel(R.drawable.banner2 , ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(R.drawable.banner2, ScaleTypes.CENTER_CROP));
         imageList.add(new SlideModel(R.drawable.banner3, ScaleTypes.CENTER_CROP));
 
         ImageSlider imageSlider = findViewById(R.id.image_slider);
         imageSlider.setImageList(imageList);
-
 
 
         showProfilePic = findViewById(R.id.imageView);
@@ -151,7 +150,6 @@ public class  MainActivity extends AppCompatActivity {
 //        usernameUser = intent.getStringExtra("username");
         tvuname.setText(role);
         String desiredUsername = name;
-
 
 
         // Retrieve the user's image URL
@@ -177,20 +175,18 @@ public class  MainActivity extends AppCompatActivity {
         });
 
 
-
-
         showProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(MainActivity.this, EditProfile.class);
 
 
-                intent1.putExtra("imau",user);
+                intent1.putExtra("imau", user);
 
-                intent1.putExtra("uname",usern.toString());
-                intent1.putExtra("uEmail",userEmail.toString());
-                intent1.putExtra("uUname",name.toString());
-                intent1.putExtra("uPwd",userPassword.toString());
+                intent1.putExtra("uname", usern.toString());
+                intent1.putExtra("uEmail", userEmail.toString());
+                intent1.putExtra("uUname", name.toString());
+                intent1.putExtra("uPwd", userPassword.toString());
 
 //                intent1.putExtra("unn",usernameUser.toString());
 //                intent1.putExtra("unn",usernameUser.toString());
@@ -203,9 +199,8 @@ public class  MainActivity extends AppCompatActivity {
     }
 
 
-
     private void bottomNavigation() {
-      //  LinearLayout homeBtn = findViewById(R.id.homeBtn);
+        //  LinearLayout homeBtn = findViewById(R.id.homeBtn);
         LinearLayout cartBtn = findViewById(R.id.cartBtn);
         LinearLayout menuBtn = findViewById(R.id.menuBtn);
         LinearLayout settingBtn = findViewById(R.id.settingBtn);
@@ -227,36 +222,36 @@ public class  MainActivity extends AppCompatActivity {
         cat_pizza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                 String path = "Pizzas";
-                intent.putExtra("path",path);
+                intent.putExtra("path", path);
                 startActivity(intent);
             }
         });
         cat_burger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                 String path = "Burgers";
-                intent.putExtra("path",path);
+                intent.putExtra("path", path);
                 startActivity(intent);
             }
         });
         cat_hotdog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                 String path = "Hotdog";
-                intent.putExtra("path",path);
+                intent.putExtra("path", path);
                 startActivity(intent);
             }
         });
         cat_drinks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                 String path = "Drinks";
-                intent.putExtra("path",path);
+                intent.putExtra("path", path);
                 startActivity(intent);
             }
         });
@@ -264,7 +259,7 @@ public class  MainActivity extends AppCompatActivity {
         cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,CartActivity.class));
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
             }
         });
 
@@ -273,15 +268,16 @@ public class  MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(role == "Admin" ){
-                    Intent intent = new Intent(MainActivity.this,MenuActivity_admin.class);
+                if (role.matches("Admin")) {
+                    Intent intent = new Intent(MainActivity.this, MenuActivity_admin.class);
                     String path = "Images";
-                    intent.putExtra("path",path);
+                    intent.putExtra("path", path);
+
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                } else {
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                     String path = "Images";
-                    intent.putExtra("path",path);
+                    intent.putExtra("path", path);
 
                     startActivity(intent);
                 }
@@ -293,9 +289,9 @@ public class  MainActivity extends AppCompatActivity {
         viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                 String path = "Images";
-                intent.putExtra("path",path);
+                intent.putExtra("path", path);
                 startActivity(intent);
             }
         });
@@ -304,7 +300,7 @@ public class  MainActivity extends AppCompatActivity {
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,SettingActivity.class));
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
             }
         });
     }
@@ -328,7 +324,7 @@ public class  MainActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-      finish();
+        finish();
     }
 
 }
