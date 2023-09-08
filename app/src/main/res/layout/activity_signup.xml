@@ -2,22 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/back_signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".Activity.SignupActivity">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="530dp"
             android:layout_margin="30dp"
             app:cardCornerRadius="30dp"
             app:cardElevation="20dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,7 +74,7 @@
                     android:drawablePadding="8dp"
                     android:hint="Name"
                     android:padding="8dp"
-                    android:textColor="@color/black" />
+                    style="@style/TEXT" />
 
                 <EditText
                     android:id="@+id/signup_email"
@@ -85,7 +86,7 @@
                     android:drawablePadding="8dp"
                     android:hint="Email"
                     android:padding="8dp"
-                    android:textColor="@color/black" />
+                    style="@style/TEXT" />
 
                 <EditText
                     android:id="@+id/signup_username"
@@ -97,7 +98,7 @@
                     android:drawablePadding="8dp"
                     android:hint="Username"
                     android:padding="8dp"
-                    android:textColor="@color/black" />
+                    style="@style/TEXT" />
 
                 <EditText
                     android:id="@+id/signup_password"
@@ -110,7 +111,7 @@
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:padding="8dp"
-                    android:textColor="@color/black" />
+                    style="@style/TEXT" />
 
                 <RadioGroup
                     android:id="@+id/radioGroup"
@@ -161,9 +162,8 @@
 
 
             </LinearLayout>
+            </ScrollView>
         </androidx.cardview.widget.CardView>
-    </ScrollView>
-
 
 
 

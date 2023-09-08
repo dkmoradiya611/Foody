@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
-    private static final String KEY_ROLE = "role";
 
-    String selectedOption;
+
 
     EditText loginUsername, loginPassword;
     Button loginButton;
@@ -61,29 +58,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
         String name = sharedPreferences.getString(KEY_NAME,null);
-        String role = sharedPreferences.getString(KEY_ROLE,null);
-        if(name != null  && role != null){
+        if(name != null){
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
-
-
-
-        RadioGroup radioGroup = findViewById(R.id.radioGroup);
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // Check which radio button is selected
-                RadioButton radioButton = findViewById(checkedId);
-
-                if (radioButton != null) {
-                    selectedOption = radioButton.getText().toString();
-                    Toast.makeText(LoginActivity.this, "Selected option: " + selectedOption, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
 
         loginUsername = findViewById(R.id.login_username);
@@ -120,12 +99,10 @@ public class LoginActivity extends AppCompatActivity {
                         }else {
                             SharedPreferences.Editor editor= sharedPreferences.edit();
                             editor.putString(KEY_NAME,loginUsername.getText().toString());
-                            editor.putString(KEY_ROLE,selectedOption.toString());
                             //editor.putString(KEY_PWD,edtpwd.getText().toString());
                             editor.apply();
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-
                             startActivity(intent);
                             Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                         }

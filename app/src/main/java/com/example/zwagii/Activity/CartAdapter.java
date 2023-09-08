@@ -17,11 +17,10 @@ import com.example.zwagii.R;
 
 import java.util.ArrayList;
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
     private ArrayList<DataClass> dataList;
     private Context context;
-    public int a = 1;
-
+    int pos = 0;
 
     public CartAdapter() {
     }
@@ -30,12 +29,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
         this.context = context;
         this.dataList = dataList;
     }
+
     @NonNull
     @Override
     public CartAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.viewholder_cart, parent, false);
         return new CartAdapter.MyViewHolder(view);
     }
+
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(dataList.get(position).getImageURL()).into(holder.recyclerImage);
@@ -43,7 +44,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
         holder.recyclerCaption.setText(dataList.get(position).getTitle());
         holder.recyclerPrice.setText(String.valueOf(dataList.get(position).getPrice()));
         holder.recyclerScore.setText(String.valueOf(dataList.get(position).getPrice()));
-
+        //String a=holder.recyclerScore.setText(String.valueOf(dataList.get(position)));
 
 
         holder.plusBtn.setOnClickListener(new View.OnClickListener() {
@@ -52,43 +53,42 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
             @Override
             public void onClick(View v) {
 
-                numberOrder  += 1;
-//                holder.recyclerPrice.setText(String.valueOf(dataList.get(position).getPrice()));
+                numberOrder = pos + 1;
+                holder.recyclerPrice.setText(String.valueOf(dataList.get(position).getPrice()));
                 int ps = Integer.parseInt(dataList.get(position).getPrice().toString());
-
 
 
                 holder.numberItemCarttxt.setText("" + numberOrder);
-//            Double b = Double.valueOf(object.getPrice());
+                Double b = Double.valueOf(dataList.get(position).getPrice());
 
 
-                holder.totaltxt.setText("$"+ Math.round(numberOrder * ps));
-                a +=1;
+                holder.totaltxt.setText("$" + Math.round(numberOrder * ps));
 
+                pos = numberOrder;
             }
         });
 
-
-
-        // It's not work properly
-
         holder.minusBtn.setOnClickListener(new View.OnClickListener() {
-            int numberOrder = Integer.parseInt(holder.numberItemCarttxt.getText().toString());
+            public int numberOrder = pos;
 
             @Override
-            public void onClick(View v) {
-                a  -= 1;
-//                holder.recyclerPrice.setText(String.valueOf(dataList.get(position).getPrice()));
-                int ps = Integer.parseInt(dataList.get(position).getPrice().toString());
+            public void onClick(View view) {
+
+                numberOrder = pos - 1;
+                if (numberOrder > 0) {
+                    holder.recyclerPrice.setText(String.valueOf(dataList.get(position).getPrice()));
+                    int ps = Integer.parseInt(dataList.get(position).getPrice().toString());
 
 
+                    holder.numberItemCarttxt.setText("" + numberOrder);
+                    Double b = Double.valueOf(dataList.get(position).getPrice());
 
-                holder.numberItemCarttxt.setText("" + a);
-//            Double b = Double.valueOf(object.getPrice());
 
-
-                holder.totaltxt.setText("$"+ Math.round(a * ps));
-
+                    holder.totaltxt.setText("$" + Math.round(numberOrder * ps));
+                    pos = numberOrder;
+                } else {
+                    numberOrder = 1;
+                }
             }
         });
 
@@ -99,8 +99,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
 //            chnageNumberItemsListener.changed();
 
 
-
-            //String sc = String.valueOf(dataList.get(position).getScore());
+        //String sc = String.valueOf(dataList.get(position).getScore());
         //holder.recyclerScore.setText(sc);
 //       holder.recyclerPrice.setText(dataList.get(position).getPrice());
 
@@ -116,13 +115,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
 //        });
 
     }
+
     @Override
     public int getItemCount() {
         return dataList.size();
     }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView recyclerImage;
-        TextView recyclerCaption,recyclerPrice,recyclerScore,plusBtn,minusBtn,numberItemCarttxt,totaltxt;
+        TextView recyclerCaption, recyclerPrice, recyclerScore, plusBtn, minusBtn, numberItemCarttxt, totaltxt;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             recyclerImage = itemView.findViewById(R.id.picCart);
@@ -138,7 +140,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
 
 
             //recyclerScore = itemView.findViewById(R.id.totalEachItem);
-
 
 
         }

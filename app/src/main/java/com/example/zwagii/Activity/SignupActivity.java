@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -54,6 +56,8 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference("users");
     FirebaseAuth Fauth;
+
+    LinearLayout bgimage;
     public static final String TAG="TAG";
 //    public void onStart(){
 //        super.onStart();
@@ -66,6 +70,29 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        AnimationDrawable animationDrawable=new AnimationDrawable();
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg2),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg3),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img2),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img3),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img4),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img5),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img6),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img7),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img8),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img9),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img10),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img11),3000);
+
+        animationDrawable.setOneShot(false);
+        animationDrawable.setEnterFadeDuration(850);
+        animationDrawable.setExitFadeDuration(1600);
+
+        bgimage=findViewById(R.id.back_signup);
+        bgimage.setBackgroundDrawable(animationDrawable);
+        animationDrawable.start();
+
 
         uploadImageUser = findViewById(R.id.uploadImageUser);
         progressBar = findViewById(R.id.progressBarUser);
