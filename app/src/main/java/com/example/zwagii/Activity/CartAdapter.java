@@ -68,6 +68,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
             }
         });
 
+
+
+        // It's not work properly
+
         holder.minusBtn.setOnClickListener(new View.OnClickListener() {
             int numberOrder = Integer.parseInt(holder.numberItemCarttxt.getText().toString());
 
