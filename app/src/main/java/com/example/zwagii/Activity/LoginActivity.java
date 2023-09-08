@@ -188,14 +188,14 @@ public class LoginActivity extends AppCompatActivity {
                         String emailFromDB = snapshot.child(userUsername).child("email").getValue(String.class);
                         String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
                         String image = snapshot.child("imageURLUser").getValue(String.class);
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("name", nameFromDB);
-//                        intent.putExtra("email", emailFromDB);
-                        intent.putExtra("username", usernameFromDB);
-//                        intent.putExtra("password", passwordFromDB);
-//                        intent.putExtra("imageURLUser", image);
-
-                        startActivity(intent);
+//                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                        intent.putExtra("name", nameFromDB);
+////                        intent.putExtra("email", emailFromDB);
+//                        intent.putExtra("username", usernameFromDB);
+////                        intent.putExtra("password", passwordFromDB);
+////                        intent.putExtra("imageURLUser", image);
+//
+//                        startActivity(intent);
                     } else {
                         loginPassword.setError("Invalid Credentials");
                         loginPassword.requestFocus();
