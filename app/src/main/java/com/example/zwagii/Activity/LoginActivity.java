@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
-    private static final String KEY_ROLE = "role";
+//    private static final String KEY_ROLE = "role";
 
     String name,role;
     String selectedOption;
@@ -62,28 +62,34 @@ public class LoginActivity extends AppCompatActivity {
 
 
          name = sharedPreferences.getString(KEY_NAME,null);
-         role = sharedPreferences.getString(KEY_ROLE,null);
-        if(name != null && role != null){
+//         role = sharedPreferences.getString(KEY_ROLE,null);
+//        if(name != null && role != null){
+//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
+
+        if(name != null){
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
 
 
-        RadioGroup radioGroup = findViewById(R.id.radioGroup);
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // Check which radio button is selected
-                RadioButton radioButton = findViewById(checkedId);
-
-                if (radioButton != null) {
-                     selectedOption = radioButton.getText().toString();
-                    Toast.makeText(LoginActivity.this, "Selected option: " + selectedOption, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        RadioGroup radioGroup = findViewById(R.id.radioGroup);
+//
+//        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                // Check which radio button is selected
+//                RadioButton radioButton = findViewById(checkedId);
+//
+//                if (radioButton != null) {
+//                     selectedOption = radioButton.getText().toString();
+//                    Toast.makeText(LoginActivity.this, "Selected option: " + selectedOption, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
         loginUsername = findViewById(R.id.login_username);
         loginPassword = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.login_button);
@@ -118,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                         }else {
                             SharedPreferences.Editor editor= sharedPreferences.edit();
                             editor.putString(KEY_NAME,loginUsername.getText().toString());
-                            editor.putString(KEY_ROLE, selectedOption.trim());
+//                            editor.putString(KEY_ROLE, selectedOption.trim());
                             //editor.putString(KEY_PWD,edtpwd.getText().toString());
                             editor.apply();
 

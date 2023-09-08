@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
         name = sharedPreferences.getString(KEY_NAME, null);
-        role = sharedPreferences.getString(KEY_ROLE, null);
+//        role = sharedPreferences.getString(KEY_ROLE, null);
 //
 //        if(name != null )
 //        {
@@ -166,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
                     userName = userSnapshot.child("username").getValue(String.class);
                     userEmail = userSnapshot.child("email").getValue(String.class);
                     userPassword = userSnapshot.child("password").getValue(String.class);
+
+                    role = userSnapshot.child("role").getValue(String.class);
 
                     // Now you can use the imageUrl in your app, e.g., to load the image using an image loading library like Glide or Picasso.
                 }
@@ -270,6 +272,12 @@ public class MainActivity extends AppCompatActivity {
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+//                String path = "Images";
+//                intent.putExtra("path", path);
+//
+//                startActivity(intent);
 
                 if (role.matches("Admin")) {
                     Intent intent = new Intent(MainActivity.this, MenuActivity_admin.class);
