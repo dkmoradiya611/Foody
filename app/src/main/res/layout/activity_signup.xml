@@ -9,16 +9,16 @@
     android:orientation="vertical"
     tools:context=".Activity.SignupActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="530dp"
             android:layout_margin="30dp"
             app:cardCornerRadius="30dp"
             app:cardElevation="20dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,8 +124,9 @@
 
 
             </LinearLayout>
+            </ScrollView>
         </androidx.cardview.widget.CardView>
-    </ScrollView>
+
 
 
 </LinearLayout>
