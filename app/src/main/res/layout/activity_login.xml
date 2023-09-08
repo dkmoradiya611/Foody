@@ -42,7 +42,7 @@
                 android:drawablePadding="8dp"
                 android:hint="Username"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                style="@style/TEXT" />
 
 
             <EditText
@@ -56,7 +56,7 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                style="@style/TEXT" />
 
             <RadioGroup
                 android:id="@+id/radioGroup"
