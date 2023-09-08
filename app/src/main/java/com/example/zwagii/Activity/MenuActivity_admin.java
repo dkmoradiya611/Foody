@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity_admin extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
@@ -38,14 +38,11 @@ public class MenuActivity extends AppCompatActivity {
     private ArrayList<DataClass> dataList;
     private MyAdapter adapter;
     SearchView searchView;
-//    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Images");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
-
-//        fab = findViewById(R.id.fab);
+        setContentView(R.layout.activity_menu_admin);
+        fab = findViewById(R.id.fab);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -114,14 +111,14 @@ public class MenuActivity extends AppCompatActivity {
                 return true;
             }
         });
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MenuActivity.this, MenuAddItemActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity_admin.this, MenuAddItemActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
     public void searchlist(String text){
         ArrayList<DataClass> searchlist=new ArrayList<>();

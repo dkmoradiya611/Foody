@@ -39,8 +39,9 @@ public class  MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
+    private static final String KEY_ROLE = "role";
 
-
+    String name,role;
     private RecyclerView recyclerView;
     private ArrayList<DataClass> dataList;
     private HighAdapter adapter;
@@ -69,7 +70,8 @@ public class  MainActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
 
-        String name = sharedPreferences.getString(KEY_NAME,null);
+         name = sharedPreferences.getString(KEY_NAME,null);
+         role = sharedPreferences.getString(KEY_ROLE,null);
 
         if(name != null )
         {
@@ -149,6 +151,11 @@ public class  MainActivity extends AppCompatActivity {
 //        usernameUser = intent.getStringExtra("username");
         tvuname.setText(name);
         String desiredUsername = name;
+
+
+        if(role == "Admin"){
+
+        }
 
         // Retrieve the user's image URL
         usersRef.orderByChild("username").equalTo(desiredUsername).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -268,10 +275,22 @@ public class  MainActivity extends AppCompatActivity {
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
-                String path = "Images";
-                intent.putExtra("path",path);
-                startActivity(intent);
+
+                if(role == "Admin" ){
+                    Intent intent = new Intent(MainActivity.this,MenuActivity_admin.class);
+                    String path = "Images";
+                    intent.putExtra("path",path);
+
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                    String path = "Images";
+                    intent.putExtra("path",path);
+
+                    startActivity(intent);
+                }
+
+
             }
         });
 

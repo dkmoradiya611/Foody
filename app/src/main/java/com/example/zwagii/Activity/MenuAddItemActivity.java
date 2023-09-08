@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -43,6 +44,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
     String item;
 
 
+
     private FloatingActionButton uploadButton;
     private ImageView uploadImage;
     EditText uploadTitle,uploadCaption,uploadPrice,uploadTime,uploadEnergy,uploadScore;
@@ -55,6 +57,8 @@ public class MenuAddItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_add_item);
+
+
 
 
         spinner =findViewById(R.id.spinner);

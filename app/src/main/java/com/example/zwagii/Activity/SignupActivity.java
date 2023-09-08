@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,9 @@ public class SignupActivity extends AppCompatActivity {
     private ImageView uploadImageUser;
     TextView loginRedirectText;
     Button signupButton;
+    RadioButton rdb1_admin,rdb2_user;
     ProgressBar progressBar;
+    String selectedOption;
     private Uri imageUri;
     //final  private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Images");
     final private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
@@ -74,6 +78,25 @@ public class SignupActivity extends AppCompatActivity {
         loginRedirectText = findViewById(R.id.loginRedirectText);
         signupButton = findViewById(R.id.signup_button);
         Fauth=FirebaseAuth.getInstance();
+
+
+        rdb1_admin = findViewById(R.id.rdb1_admin);
+        rdb2_user = findViewById(R.id.rdb1_user);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Check which radio button is selected
+                RadioButton radioButton = findViewById(checkedId);
+
+                if (radioButton != null) {
+                    selectedOption = radioButton.getText().toString();
+                    Toast.makeText(SignupActivity.this, "Selected option: " + selectedOption, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -152,14 +175,19 @@ public class SignupActivity extends AppCompatActivity {
                                     String email = signupEmail.getText().toString();
                                     String username = signupUsername.getText().toString();
                                     String password = signupPassword.getText().toString();
-
-                                    HelperClass helperClass = new HelperClass(name, email, username, password,uri.toString());
+                                    String role = selectedOption.toString();
+                                    HelperClass helperClass = new HelperClass(name, email, username, password,uri.toString(),role);
                                     reference.child(username).setValue(helperClass);
 
                                     progressBar.setVisibility(View.INVISIBLE);
 
+
+
+
                                     Toast.makeText(SignupActivity.this, "You have signup successfully!", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+
+
                                     startActivity(intent);
                                 }
                             });
