@@ -72,11 +72,11 @@ public class  MainActivity extends AppCompatActivity {
 
          name = sharedPreferences.getString(KEY_NAME,null);
          role = sharedPreferences.getString(KEY_ROLE,null);
-
-        if(name != null )
-        {
-            //tvuname.setText(name);
-        }
+//
+//        if(name != null )
+//        {
+//            //tvuname.setText(name);
+//        }
 
 
 
@@ -149,13 +149,10 @@ public class  MainActivity extends AppCompatActivity {
         // Replace "desiredUsername" with the username you want to fetch the image for
 //        Intent intent = getIntent();
 //        usernameUser = intent.getStringExtra("username");
-        tvuname.setText(name);
+        tvuname.setText(role);
         String desiredUsername = name;
 
 
-        if(role == "Admin"){
-
-        }
 
         // Retrieve the user's image URL
         usersRef.orderByChild("username").equalTo(desiredUsername).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -280,7 +277,6 @@ public class  MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this,MenuActivity_admin.class);
                     String path = "Images";
                     intent.putExtra("path",path);
-
                     startActivity(intent);
                 }else{
                     Intent intent = new Intent(MainActivity.this,MenuActivity.class);

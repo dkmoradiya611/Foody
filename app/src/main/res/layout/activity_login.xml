@@ -40,6 +40,11 @@
                 android:drawableLeft="@drawable/baseline_person_pin_24"
                 android:drawablePadding="8dp"
                 android:textColor="@color/black"/>
+
+
+
+
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -52,6 +57,44 @@
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="8dp"
                 android:textColor="@color/black"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/rdb1_admin"
+                    android:layout_width="167dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Admin"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/rdb1_user"
+                    android:layout_width="167dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="User"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </RadioGroup>
+
+
+
+            <ProgressBar
+                android:id="@+id/progressBarUser2"
+                android:layout_width="60dp"
+                android:layout_height="59dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/lavender"
+                android:visibility="invisible" />
+
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -74,12 +117,5 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <ProgressBar
-        android:id="@+id/progressBarUser2"
-        android:layout_width="60dp"
-        android:layout_height="59dp"
-        android:layout_gravity="center"
-        android:indeterminateTint="@color/lavender"
-        android:visibility="invisible" />
 
 </LinearLayout>
