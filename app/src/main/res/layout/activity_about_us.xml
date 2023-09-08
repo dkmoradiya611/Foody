@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.AboutUs">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:layout_width="70dp"
+            android:id="@+id/imgback"
+            android:layout_height="70dp"
+            android:padding="14dp"
+            style="@style/TEXT"
+            android:src="@drawable/arrow" />
+
+        <TextView
+            style="@style/TEXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="About Us"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="ScrollViewCount,SpeakableTextPresentCheck,UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            style="@style/SCREEN"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#D398AC"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10sp"
+                    android:layout_weight="1"
+                    android:text="GADHIYA DARSHIT KISHORBHAI"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_weight="1"
+                    android:text="TYBCA DIVISION-7"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="90dp"
+                    android:layout_weight="1"
+                    android:text="+91 90811 54809"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="130dp"
+                    android:layout_weight="1"
+                    android:text="VEER NARMAD SOUTH GUJARAT UNIVERSITY"
+                    android:textIsSelectable="true"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#B5A184">
+
+                <TextView
+                    android:id="@+id/textView23"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10sp"
+                    android:layout_weight="1"
+                    android:text="MORADIYA PARTH KESHAVBHAI"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView24"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_weight="1"
+                    android:text="TYBCA DIVISION-7"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView25"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="90dp"
+                    android:layout_weight="1"
+                    android:text="+91 97260 52802"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="130dp"
+                    android:layout_weight="1"
+                    android:text="VEER NARMAD SOUTH GUJARAT UNIVERSITY"
+                    android:textIsSelectable="true"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#AD95D8">
+
+                <TextView
+                    android:id="@+id/textView33"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10sp"
+                    android:layout_weight="1"
+                    android:text="MORADIYA DEEP KAMLESHBHAI"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView34"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_weight="1"
+                    android:text="TYBCA DIVISION-7"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView35"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="90dp"
+                    android:layout_weight="1"
+                    android:text="+91 81605 45269"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView36"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="130dp"
+                    android:layout_weight="1"
+                    android:text="VEER NARMAD SOUTH GUJARAT UNIVERSITY"
+                    android:textIsSelectable="true"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#98B17B">
+
+                <TextView
+                    android:id="@+id/textView43"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10sp"
+                    android:layout_weight="1"
+                    android:text="RAMANI MEET GHANSHYAMBHAI"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView44"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_weight="1"
+                    android:text="TYBCA DIVISION-7"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView45"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="90dp"
+                    android:layout_weight="1"
+                    android:text="+91 90542 58490"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView46"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="130dp"
+                    android:layout_weight="1"
+                    android:text="VEER NARMAD SOUTH GUJARAT UNIVERSITY"
+                    android:textIsSelectable="true"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#C6C084">
+
+                <TextView
+                    android:id="@+id/textView53"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10sp"
+                    android:layout_weight="1"
+                    android:text="SARVAIYA DEVANG GHANSHYAMBHAI"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView54"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_weight="1"
+                    android:text="TYBCA DIVISION-7"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView55"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="90dp"
+                    android:layout_weight="1"
+                    android:text="+91 99091 42512"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView56"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="130dp"
+                    android:layout_weight="1"
+                    android:text="VEER NARMAD SOUTH GUJARAT UNIVERSITY"
+                    android:textIsSelectable="true"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#AD93B1">
+
+                <TextView
+                    android:id="@+id/textView63"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10sp"
+                    android:layout_weight="1"
+                    android:text="PATEL HARSH RAJENDRAKUMAR"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView64"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_weight="1"
+                    android:text="TYBCA DIVISION-7"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView65"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="90dp"
+                    android:layout_weight="1"
+                    android:text="+91 70697 87647"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView66"
+                    style="@style/TEXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="130dp"
+                    android:layout_weight="1"
+                    android:text="VEER NARMAD SOUTH GUJARAT UNIVERSITY"
+                    android:textIsSelectable="true"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
