@@ -98,8 +98,8 @@ public class EditProfile extends AppCompatActivity {
                 if (isNameChanged() || isPasswordChanged() || isEmailChanged() || isPasswordChanged() || isUnameChanged()){
                     Toast.makeText(EditProfile.this, "Saved", Toast.LENGTH_SHORT).show();
 
-                    startActivity(new Intent(EditProfile.this, MainActivity.class));
-                    finish();
+//                    startActivity(new Intent(EditProfile.this, MainActivity.class));
+//                    finish();
                 } else {
                     Toast.makeText(EditProfile.this, "No Changes Found", Toast.LENGTH_SHORT).show();
                 }
@@ -155,4 +155,6 @@ public class EditProfile extends AppCompatActivity {
         editUsername.setText(usernameUser);
         editPassword.setText(passwordUser);
     }
+
+
 }

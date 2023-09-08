@@ -35,6 +35,7 @@ public class  MainActivity extends AppCompatActivity {
 //    private RecyclerView.Adapter adapterFoodList;
 //    private RecyclerView recyclerViewFood;
 
+    String user,usern,userName,userEmail,userPassword;
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
@@ -88,6 +89,7 @@ public class  MainActivity extends AppCompatActivity {
                 editor.apply();
                 finish();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
                 FirebaseAuth.getInstance().signOut();
 
             }
@@ -155,6 +157,11 @@ public class  MainActivity extends AppCompatActivity {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     String imageUrl = userSnapshot.child("imageURLUser").getValue(String.class);
                     Glide.with(MainActivity.this).load(imageUrl).into(showProfilePic);
+                    usern = userSnapshot.child("name").getValue(String.class);
+                    userName = userSnapshot.child("username").getValue(String.class);
+                    userEmail = userSnapshot.child("email").getValue(String.class);
+                    userPassword = userSnapshot.child("password").getValue(String.class);
+
                     // Now you can use the imageUrl in your app, e.g., to load the image using an image loading library like Glide or Picasso.
                 }
             }
@@ -164,7 +171,34 @@ public class  MainActivity extends AppCompatActivity {
                 // Handle the error, if any.
             }
         });
+
+
+
+
+        showProfilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(MainActivity.this, EditProfile.class);
+
+
+                intent1.putExtra("imau",user);
+
+                intent1.putExtra("uname",usern.toString());
+                intent1.putExtra("uEmail",userEmail.toString());
+                intent1.putExtra("uUname",name.toString());
+                intent1.putExtra("uPwd",userPassword.toString());
+
+//                intent1.putExtra("unn",usernameUser.toString());
+//                intent1.putExtra("unn",usernameUser.toString());
+//                intent1.putExtra("unn",usernameUser.toString());
+//                intent1.putExtra("unn",usernameUser.toString());
+                //intent1.putExtra("un",usernameUser.toString());
+                startActivity(intent1);
+            }
+        });
     }
+
+
 
     private void bottomNavigation() {
       //  LinearLayout homeBtn = findViewById(R.id.homeBtn);
@@ -278,6 +312,8 @@ public class  MainActivity extends AppCompatActivity {
 //        recyclerViewFood.setAdapter(adapterFoodList);
     }
 
-
+    public void onBackPressed() {
+      finish();
+    }
 
 }
