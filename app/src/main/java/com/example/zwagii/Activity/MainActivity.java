@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-//    private RecyclerView.Adapter adapterFoodList;
+    //    private RecyclerView.Adapter adapterFoodList;
 //    private RecyclerView recyclerViewFood;
 
     String user, usern, userName, userEmail, userPassword;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Window window=this.getWindow();
+        window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -148,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         // Replace "desiredUsername" with the username you want to fetch the image for
 //        Intent intent = getIntent();
 //        usernameUser = intent.getStringExtra("username");
-        tvuname.setText(role);
+        tvuname.setText(userName);
         String desiredUsername = name;
 
 
@@ -324,7 +327,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        finish();
+        finishAffinity();
+        MainActivity.this.finish();
+        //System.exit(0);
     }
-
 }

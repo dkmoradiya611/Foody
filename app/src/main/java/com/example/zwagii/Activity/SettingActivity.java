@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.zwagii.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +51,8 @@ public class SettingActivity extends AppCompatActivity {
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Window window=this.getWindow();
+        window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
@@ -153,13 +157,16 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         logout.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.clear();
-//                //editor.commit();
-//                editor.apply();
-//                startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                editor.apply();
+                finish();
+                startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+
+                FirebaseAuth.getInstance().signOut();
+
             }
         });
 
