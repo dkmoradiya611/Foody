@@ -2,11 +2,13 @@ package com.example.zwagii.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
-
-
+    LinearLayout bgimage;
 
     EditText loginUsername, loginPassword;
     Button loginButton;
@@ -53,6 +54,27 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        AnimationDrawable animationDrawable=new AnimationDrawable();
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg2),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg3),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img2),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img3),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img4),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img5),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img6),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img7),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img8),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img9),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img10),3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img11),3000);
+
+        animationDrawable.setOneShot(false);
+        animationDrawable.setEnterFadeDuration(850);
+        animationDrawable.setExitFadeDuration(1600);
+
+        bgimage=findViewById(R.id.back_login);
+        bgimage.setBackgroundDrawable(animationDrawable);
+        animationDrawable.start();
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
 
