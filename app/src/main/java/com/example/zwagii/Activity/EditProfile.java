@@ -3,6 +3,7 @@ package com.example.zwagii.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 public class EditProfile extends AppCompatActivity {
     private static final String TAG = "EditProfile";
     EditText editName, editEmail, editUsername, editPassword;
-
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_NAME = "name";
 
     ImageView showProfilePic;
     Button saveButton;
@@ -47,13 +50,24 @@ public class EditProfile extends AppCompatActivity {
         editPassword = findViewById(R.id.editPassword);
         saveButton = findViewById(R.id.saveButton);
 
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+
+        String name = sharedPreferences.getString(KEY_NAME,null);
+
+        if(name != null )
+        {
+            //tvuname.setText(name);
+        }
+
 
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
         // Replace "desiredUsername" with the username you want to fetch the image for
         Intent intent = getIntent();
-        usernameUser = intent.getStringExtra("username");
-        String desiredUsername = usernameUser;
+        usernameUser = intent.getStringExtra("imau");
+        String desiredUsername = name;
+
+        showData();
 
         // Retrieve the user's image URL
         usersRef.orderByChild("username").equalTo(desiredUsername).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -76,13 +90,16 @@ public class EditProfile extends AppCompatActivity {
 
 //        showProfilePic.setImageURI(FirebaseDatabase.getInstance().getReference().child("imageURLUser").);
 
-        showData();
+
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isNameChanged() || isPasswordChanged() || isEmailChanged() || isPasswordChanged() || isUnameChanged()){
                     Toast.makeText(EditProfile.this, "Saved", Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(EditProfile.this, MainActivity.class));
+                    finish();
                 } else {
                     Toast.makeText(EditProfile.this, "No Changes Found", Toast.LENGTH_SHORT).show();
                 }
@@ -128,13 +145,10 @@ public class EditProfile extends AppCompatActivity {
     }
     public void showData(){
         Intent intent = getIntent();
-        nameUser = intent.getStringExtra("name");
-        emailUser = intent.getStringExtra("email");
-        usernameUser = intent.getStringExtra("username");
-        passwordUser = intent.getStringExtra("password");
-
-
-
+        nameUser = intent.getStringExtra("uname");
+        emailUser = intent.getStringExtra("uEmail");
+        usernameUser = intent.getStringExtra("uUname");
+        passwordUser = intent.getStringExtra("uPwd");
 
         editName.setText(nameUser);
         editEmail.setText(emailUser);

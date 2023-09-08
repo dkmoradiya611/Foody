@@ -211,7 +211,7 @@ public class SettingActivity extends AppCompatActivity {
 
                 intent1.putExtra("uname",usern.toString());
                 intent1.putExtra("uEmail",userEmail.toString());
-                intent1.putExtra("uUname",user.toString());
+                intent1.putExtra("uUname",name.toString());
                 intent1.putExtra("uPwd",userPassword.toString());
 
 //                intent1.putExtra("unn",usernameUser.toString());
