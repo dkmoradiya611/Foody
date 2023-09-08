@@ -136,13 +136,13 @@
 
                 <EditText
                     android:id="@+id/uploadTitle"
-                    
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.6"
                     android:background="@drawable/lavender_border"
                     android:hint="Add Title"
+                    style="@style/TEXT"
                     android:padding="16dp" />
 
                 <EditText
@@ -152,6 +152,7 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.6"
+                    style="@style/TEXT"
                     android:background="@drawable/lavender_border"
                     android:hint="Add Description"
                     android:maxLines="5"
@@ -164,6 +165,7 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.6"
+                    style="@style/TEXT"
                     android:background="@drawable/lavender_border"
                     android:hint="$0000.0 Price"
                     android:maxLength="4"
@@ -171,7 +173,7 @@
 
                 <EditText
                     android:id="@+id/uploadTime"
-                   
+                    style="@style/TEXT"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
@@ -182,7 +184,7 @@
 
                 <EditText
                     android:id="@+id/uploadEnergy"
-                   
+                    style="@style/TEXT"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
@@ -193,7 +195,7 @@
 
                 <EditText
                     android:id="@+id/uploadScore"
-                   
+                    style="@style/TEXT"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
@@ -204,7 +206,7 @@
 
                 <Spinner
                     android:id="@+id/spinner"
-                   
+                    style="@style/TEXT"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
@@ -234,7 +236,7 @@
                     android:layout_marginStart="20dp"
                     android:backgroundTint="@color/lavender"
                     android:src="@drawable/baseline_send_24"
-                    app:tint="@color/white"
+                    style="@style/TEXT"
                     tools:ignore="SpeakableTextPresentCheck" />
             </LinearLayout>
 
