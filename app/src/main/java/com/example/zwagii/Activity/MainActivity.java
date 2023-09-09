@@ -183,21 +183,8 @@ public class MainActivity extends AppCompatActivity {
         showProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(MainActivity.this, EditProfile.class);
+                Intent intent1 = new Intent(MainActivity.this, SettingActivity.class);
 
-
-                intent1.putExtra("imau", user);
-
-                intent1.putExtra("uname", usern.toString());
-                intent1.putExtra("uEmail", userEmail.toString());
-                intent1.putExtra("uUname", name.toString());
-                intent1.putExtra("uPwd", userPassword.toString());
-
-//                intent1.putExtra("unn",usernameUser.toString());
-//                intent1.putExtra("unn",usernameUser.toString());
-//                intent1.putExtra("unn",usernameUser.toString());
-//                intent1.putExtra("unn",usernameUser.toString());
-                //intent1.putExtra("un",usernameUser.toString());
                 startActivity(intent1);
             }
         });
