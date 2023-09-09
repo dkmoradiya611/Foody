@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String KEY_NAME = "name";
 //    private static final String KEY_ROLE = "role";
 
-    String name,role;
+    String name, role;
     String selectedOption;
 
     EditText loginUsername, loginPassword;
@@ -49,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth Fauth;
     LinearLayout bgimage;
 
-//    public void onStart(){
+    //    public void onStart(){
 //        super.onStart();
 //        FirebaseUser user=Fauth.getCurrentUser();
 //        if (user!=null){
@@ -61,32 +57,32 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        AnimationDrawable animationDrawable=new AnimationDrawable();
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg2),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg3),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img2),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img3),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img4),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img5),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img6),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img7),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img8),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img9),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img10),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img11),3000);
+        AnimationDrawable animationDrawable = new AnimationDrawable();
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg2), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg3), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img2), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img3), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img4), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img5), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img6), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img7), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img8), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img9), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img10), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img11), 3000);
 
         animationDrawable.setOneShot(false);
         animationDrawable.setEnterFadeDuration(850);
         animationDrawable.setExitFadeDuration(1600);
 
-        bgimage=findViewById(R.id.back_login);
+        bgimage = findViewById(R.id.back_login);
         bgimage.setBackgroundDrawable(animationDrawable);
         animationDrawable.start();
 
-        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
 
-         name = sharedPreferences.getString(KEY_NAME,null);
+        name = sharedPreferences.getString(KEY_NAME, null);
 //         role = sharedPreferences.getString(KEY_ROLE,null);
 //        if(name != null && role != null){
 //            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -94,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 //            finish();
 //        }
 
-        if(name != null){
+        if (name != null) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -122,41 +118,45 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBarUser2);
         Fauth = FirebaseAuth.getInstance();
         loginButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
-                String email, password;
-                email = String.valueOf(loginUsername.getText());
-                password = String.valueOf(loginPassword.getText());
-                Fauth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressBar.setVisibility(View.GONE);
-                        if (task.isSuccessful()) {
-                            FirebaseUser user=Fauth.getCurrentUser();
-                            assert user!=null;
-                            if (user.isEmailVerified()){
-                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                            }else {
-                                Toast.makeText(LoginActivity.this, "Please Verify Email", Toast.LENGTH_SHORT).show();
-                            }
+                if (checkUser()) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    String email, password;
+                    email = String.valueOf(loginUsername.getText());
+                    password = String.valueOf(loginPassword.getText());
+                    Fauth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressBar.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = Fauth.getCurrentUser();
+                                assert user != null;
+                                if (user.isEmailVerified()) {
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Please Verify Email", Toast.LENGTH_SHORT).show();
+                                }
 //                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
 //                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        }else {
-                            SharedPreferences.Editor editor= sharedPreferences.edit();
-                            editor.putString(KEY_NAME,loginUsername.getText().toString());
+                            } else {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(KEY_NAME, loginUsername.getText().toString());
 //                            editor.putString(KEY_ROLE, selectedOption.trim());
-                            //editor.putString(KEY_PWD,edtpwd.getText().toString());
-                            editor.apply();
+                                //editor.putString(KEY_PWD,edtpwd.getText().toString());
+                                editor.apply();
 
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-                if (!validateUsername() | !validatePassword()) {
+                    });
+
                 } else {
+                    //validateUsername();
+                    //validatePassword();
                     checkUser();
                 }
             }
@@ -170,29 +170,49 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public Boolean validateUsername() {
+  // public Boolean validateUsername() {
+  //     String val = loginUsername.getText().toString();
+  //     if (val.isEmpty()) {
+  //         loginUsername.setError("Username cannot be empty");
+  //         return false;
+  //     } else {
+  //         loginUsername.setError(null);
+  //         return true;
+  //     }
+  // }
+
+  // public Boolean validatePassword() {
+  //     String val = loginPassword.getText().toString();
+  //     if (val.isEmpty()) {
+  //         loginPassword.setError("Password cannot be empty");
+  //         return false;
+  //     } else {
+  //         loginPassword.setError(null);
+  //         return true;
+  //     }
+  // }
+
+    boolean valid;
+    public boolean checkUser() {
         String val = loginUsername.getText().toString();
         if (val.isEmpty()) {
             loginUsername.setError("Username cannot be empty");
-            return false;
+            valid=false;
         } else {
             loginUsername.setError(null);
-            return true;
         }
-    }
 
-    public Boolean validatePassword() {
-        String val = loginPassword.getText().toString();
-        if (val.isEmpty()) {
+
+        String val2 = loginPassword.getText().toString();
+        if (val2.isEmpty()) {
             loginPassword.setError("Password cannot be empty");
-            return false;
+            valid=false;
         } else {
             loginPassword.setError(null);
-            return true;
         }
-    }
 
-    public void checkUser() {
+
+
         String userUsername = loginUsername.getText().toString().trim();
         String userPassword = loginPassword.getText().toString().trim();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
@@ -217,13 +237,16 @@ public class LoginActivity extends AppCompatActivity {
 ////                        intent.putExtra("imageURLUser", image);
 //
 //                        startActivity(intent);
+                        valid=true;
                     } else {
                         loginPassword.setError("Invalid Credentials");
                         loginPassword.requestFocus();
+                        valid=false;
                     }
                 } else {
                     loginUsername.setError("User does not exist");
                     loginUsername.requestFocus();
+                    valid=false;
                 }
             }
 
@@ -231,6 +254,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+        return valid;
     }
 
     @Override
