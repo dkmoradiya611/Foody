@@ -3,12 +3,17 @@ package com.example.zwagii.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.NotificationCompat;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -47,6 +52,8 @@ public class SettingActivity extends AppCompatActivity {
     TextView usen;
     RelativeLayout rv,sentmsg,aboutus,logout;
     ImageView imageView;
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
+    private final static String default_notification_channel_id="default";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -201,6 +208,37 @@ public class SettingActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(notify.isChecked()){
                     Toast.makeText(SettingActivity.this, "Turn On Notification", Toast.LENGTH_SHORT).show();
+
+
+
+
+                        Intent snoozeIntent = new Intent(SettingActivity.this, MainActivity.class);
+                        snoozeIntent.setAction("ACTION_SNOOZE");
+                        snoozeIntent.putExtra("EXTRA_NOTIFICATION_ID", 0);
+                        PendingIntent snoozePendingIntent = PendingIntent.getBroadcast(SettingActivity.this, 0, snoozeIntent, PendingIntent.FLAG_IMMUTABLE);
+                        NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                        //MediaPlayer mp = MediaPlayer.create(SettingActivity.this, R.raw.snapchat_tone);
+                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(SettingActivity.this, default_notification_channel_id);
+                        mBuilder.setContentTitle("Foody");
+                        mBuilder.setContentText("Hungry??\nOrder a Fresh Food");
+                        mBuilder.setTicker("Hungry??\nOrder a Fresh Food");
+                        mBuilder.setSmallIcon(R.drawable.baseline_info_24);
+                        mBuilder.setAutoCancel(true);
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            int importance = NotificationManager.IMPORTANCE_HIGH;
+                            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
+                            mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
+                            assert mNotificationManager != null;
+                            mNotificationManager.createNotificationChannel(notificationChannel);
+                        }
+                        assert mNotificationManager != null;
+                        //mp.start();
+                        mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
+
+
+
+
                 }
                 else
                 {
