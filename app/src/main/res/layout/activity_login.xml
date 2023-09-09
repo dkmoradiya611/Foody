@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/back_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".Activity.LoginActivity">
 
     <androidx.cardview.widget.CardView
@@ -34,6 +35,7 @@
 
             <EditText
                 android:id="@+id/login_username"
+                style="@style/TEXT"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="40dp"
@@ -41,12 +43,12 @@
                 android:drawableLeft="@drawable/baseline_person_pin_24"
                 android:drawablePadding="8dp"
                 android:hint="Username"
-                android:padding="8dp"
-                style="@style/TEXT" />
+                android:padding="8dp" />
 
 
             <EditText
                 android:id="@+id/login_password"
+                style="@style/TEXT"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -55,35 +57,34 @@
                 android:drawablePadding="8dp"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:padding="8dp"
-                style="@style/TEXT" />
+                android:padding="8dp" />
 
-<!--            <RadioGroup-->
-<!--                android:id="@+id/radioGroup"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content">-->
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-<!--                <RadioButton-->
-<!--                    android:id="@+id/rdb1_admin"-->
-<!--                    android:layout_width="167dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:text="Admin"-->
-<!--                    style="@style/TEXT"-->
-<!--                    android:textSize="20sp"-->
-<!--                    android:textStyle="bold" />-->
+                <RadioButton
+                    android:id="@+id/rdb1_admin"
+                    style="@style/TEXT"
+                    android:layout_width="167dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Admin"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-<!--                <RadioButton-->
-<!--                    android:id="@+id/rdb1_user"-->
-<!--                    android:layout_width="167dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:text="User"-->
-<!--                    style="@style/TEXT"-->
-<!--                    android:textSize="20sp"-->
-<!--                    android:textStyle="bold" />-->
+                <RadioButton
+                    android:id="@+id/rdb1_user"
+                    style="@style/TEXT"
+                    android:layout_width="167dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="User"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-<!--            </RadioGroup>-->
+            </RadioGroup>
 
 
             <ProgressBar
