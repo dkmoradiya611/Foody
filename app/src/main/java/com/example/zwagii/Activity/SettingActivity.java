@@ -43,8 +43,9 @@ public class SettingActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
+    private static final String KEY_EMAIL = "email";
     SharedPreferences.Editor editor;
-    TextView usen;
+    TextView usen,txtemail;
     RelativeLayout rv,sentmsg,aboutus,logout;
     ImageView imageView;
 
@@ -58,6 +59,7 @@ public class SettingActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.uid);
         usen = findViewById(R.id.uname);
+        txtemail = findViewById(R.id.txtemail);
         editbutton = findViewById(R.id.editprofile);
 
         usersRef = FirebaseDatabase.getInstance().getReference("users");
@@ -66,6 +68,7 @@ public class SettingActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
 
         String name = sharedPreferences.getString(KEY_NAME,null);
+        String email = sharedPreferences.getString(KEY_EMAIL,null);
 
         if(name != null )
         {
@@ -99,6 +102,7 @@ public class SettingActivity extends AppCompatActivity {
 //
 
                     usen.setText(name.toString());
+                    txtemail.setText(userEmail.toString());
 
 
                     Glide.with(SettingActivity.this).load(imageUrl).into(imageView);
