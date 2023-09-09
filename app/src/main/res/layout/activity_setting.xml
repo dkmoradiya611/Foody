@@ -78,12 +78,13 @@
                 android:text="username"
                 android:textSize="22sp"
                 android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/txtemail"
+                style="@style/TEXT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TEXT"
-                android:text="+56 65985 45698"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="wrap_content"
