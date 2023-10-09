@@ -160,20 +160,21 @@
 
                 <EditText
                     android:id="@+id/uploadPrice"
-                    
+                    android:inputType="number"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.6"
                     style="@style/TEXT"
                     android:background="@drawable/lavender_border"
-                    android:hint="$0000.0 Price"
+                    android:hint="₹0000 Price"
                     android:maxLength="4"
                     android:padding="16dp" />
 
                 <EditText
                     android:id="@+id/uploadTime"
                     style="@style/TEXT"
+                    android:inputType="number"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
@@ -185,6 +186,7 @@
                 <EditText
                     android:id="@+id/uploadEnergy"
                     style="@style/TEXT"
+                    android:inputType="number"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
@@ -196,6 +198,7 @@
                 <EditText
                     android:id="@+id/uploadScore"
                     style="@style/TEXT"
+                    android:inputType="numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"

@@ -32,14 +32,16 @@ public class CartActivity extends AppCompatActivity {
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
     String name;
+    int total=0;
+    int del=0;
 
 
 
     private RecyclerView recyclerView;
-    private ArrayList<DataClass> dataList;
+
     private CartAdapter adapter;
-    
-//    private RecyclerView.Adapter adapter;
+
+    //    private RecyclerView.Adapter adapter;
 //    private RecyclerView recyclerView;
 //    private ManagementCart managementCart;
     private TextView totalFeeTxt,taxTxt,deliveryTxt,totaltxt,emptyTxt;
@@ -67,20 +69,42 @@ public class CartActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.view3);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        dataList = new ArrayList<>();
-        adapter = new CartAdapter(this, dataList);
-        recyclerView.setAdapter(adapter);
+
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
+//                    dataList.add(dataClass);
+//                }
+                ArrayList<CartClass> dataList;
+                dataList = new ArrayList<>();
+                total=0;
+
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
+                    CartClass dataClass = dataSnapshot.getValue(CartClass.class);
                     dataList.add(dataClass);
                 }
+                adapter = new CartAdapter(CartActivity.this, dataList,recyclerView);
+                recyclerView.setAdapter(adapter);
+                for(int i=0;i<dataList.size();i++){
+                    System.out.println(dataList.get(i).getTotalPrice()+"₹");
+                    total+=Integer.parseInt(dataList.get(i).getTotalPrice());
+                }
+
+                totalFeeTxt.setText("₹"+total);
+                Double dd1 = Double.valueOf(total);
+                double dd = dd1 * 10 / 100;
+                deliveryTxt.setText("10%");
+                double dd2 = dd +dd1 * 15 / 100;
+                taxTxt.setText("15%");
                 adapter.notifyDataSetChanged();
+
+                total = (int) (total+dd2);
+                totaltxt.setText("₹"+total);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -93,6 +117,14 @@ public class CartActivity extends AppCompatActivity {
         initView();
         initList();
         calculateCart();
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartActivity.this,MainActivity.class));
+                finish();
+            }
+        });
+
         setVariable();
 
 //        Intent intent = getIntent();
@@ -121,7 +153,10 @@ public class CartActivity extends AppCompatActivity {
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(managementCart.getListCart().isEmpty())
+
+                Toast.makeText(CartActivity.this, "Your Food is going to prepare", Toast.LENGTH_SHORT).show();
+
+//                if
 //                {
 //                    orderBtn.setEnabled(false);
 //                    Toast.makeText(CartActivity.this, "Your cart is empty", Toast.LENGTH_SHORT).show();
@@ -138,7 +173,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void setVariable() {
-        backBtn.setOnClickListener(v -> finish());
+
+//        backBtn.setOnClickListener(v -> finish());
     }
 
     public void initList() {
@@ -204,4 +240,5 @@ public class CartActivity extends AppCompatActivity {
 
 
     }
+
 }

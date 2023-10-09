@@ -31,11 +31,52 @@
         app:layout_constraintStart_toEndOf="@id/recyclerImage"
         app:layout_constraintTop_toTopOf="@id/recyclerImage"
         />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/totalEachItem"
+        app:layout_constraintEnd_toStartOf="@+id/totalEachItem"
+        app:layout_constraintHorizontal_bias="0.966"
+        app:layout_constraintStart_toEndOf="@+id/recyclerCaption"
+        app:layout_constraintTop_toTopOf="@+id/totalEachItem"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/star" />
+
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/totalEachItem"
+        app:layout_constraintHorizontal_bias="0.838"
+        app:layout_constraintStart_toEndOf="@+id/recyclerPrice1"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:srcCompat="@drawable/time" />
+
+    <TextView
+        android:id="@+id/totalEachItem1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="0"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
+
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totalEachItem"
+        app:layout_constraintVertical_bias="0.439" />
+
     <TextView
         android:id="@+id/recyclerPrice1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$0"
+        android:textColor="@color/gray"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/recyclerImage"
         app:layout_constraintStart_toStartOf="@+id/recyclerCaption"
@@ -48,6 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="$0"
+        android:textColor="@color/gray"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/recyclerCaption"
@@ -56,27 +98,14 @@
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:background="@drawable/category_background"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerPrice1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerPrice1">
-
-        <Button
-            android:id="@+id/btncart_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#18a73e"
-            android:text="Add to Cart"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="@+id/recyclerPrice1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

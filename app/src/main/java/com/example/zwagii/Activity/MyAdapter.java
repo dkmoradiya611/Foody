@@ -47,8 +47,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         Glide.with(context).load(dataList.get(position).getImageURL()).into(holder.recyclerImage);
 
         holder.recyclerCaption.setText(dataList.get(position).getTitle());
-        holder.recyclerPrice.setText(dataList.get(position).getPrice());
+        String a = dataList.get(position).getPrice();
+        holder.recyclerPrice.setText("₹"+a);
+
+
         holder.recyclerScore.setText(dataList.get(position).getScore());
+
+        String t = String.valueOf(dataList.get(position).getTime());
+        holder.recyclerTime.setText(t + "min");
+//        holder.recyclerTime.setText(dataList.get(position).getPrice());
 //        holder.recyclerPrice.setText(dataList.get(position).getPrice());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +68,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             }
         });
 
-        holder.recyclerBtn.setOnClickListener(new View.OnClickListener() {
+        /*holder.recyclerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -97,7 +104,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                 newSubfolderRef2.setValue(pr);
                 newSubfolderRef3.setValue(sc);
             }
-        });
+        });*/
 
 
 
@@ -113,16 +120,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView recyclerImage;
-        TextView recyclerCaption,recyclerPrice,recyclerScore;
-        Button recyclerBtn;
+        TextView recyclerCaption,recyclerPrice,recyclerScore,recyclerTime;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             recyclerImage = itemView.findViewById(R.id.recyclerImage);
             recyclerCaption = itemView.findViewById(R.id.recyclerCaption);
             recyclerPrice = itemView.findViewById(R.id.recyclerPrice1);
             recyclerScore = itemView.findViewById(R.id.totalEachItem);
-            recyclerBtn = itemView.findViewById(R.id.btncart_add);
-
+            recyclerTime = itemView.findViewById(R.id.totalEachItem1);
 
 
 

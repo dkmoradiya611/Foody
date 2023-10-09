@@ -47,8 +47,9 @@ public class SignupActivity extends AppCompatActivity {
     private ImageView uploadImageUser;
     TextView loginRedirectText;
     Button signupButton;
-    RadioButton rdb1_admin,rdb2_user;
+    RadioButton rdb1_admin, rdb2_user;
     ProgressBar progressBar;
+    RadioGroup radioGroup;
     String selectedOption;
     private Uri imageUri;
     //final  private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Images");
@@ -58,8 +59,9 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseAuth Fauth;
 
     LinearLayout bgimage;
-    public static final String TAG="TAG";
-//    public void onStart(){
+    public static final String TAG = "TAG";
+
+    //    public void onStart(){
 //        super.onStart();
 //        FirebaseUser user=Fauth.getCurrentUser();
 //        if (user!=null){
@@ -71,25 +73,25 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        AnimationDrawable animationDrawable=new AnimationDrawable();
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg2),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg3),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img2),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img3),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img4),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img5),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img6),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img7),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img8),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img9),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img10),3000);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img11),3000);
+        AnimationDrawable animationDrawable = new AnimationDrawable();
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg2), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.bg3), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img2), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img3), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img4), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img5), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img6), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img7), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img8), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img9), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img10), 3000);
+        animationDrawable.addFrame(getResources().getDrawable(R.drawable.img11), 3000);
 
         animationDrawable.setOneShot(false);
         animationDrawable.setEnterFadeDuration(850);
         animationDrawable.setExitFadeDuration(1600);
 
-        bgimage=findViewById(R.id.back_signup);
+        bgimage = findViewById(R.id.back_signup);
         bgimage.setBackgroundDrawable(animationDrawable);
         animationDrawable.start();
 
@@ -104,12 +106,13 @@ public class SignupActivity extends AppCompatActivity {
         signupPassword = findViewById(R.id.signup_password);
         loginRedirectText = findViewById(R.id.loginRedirectText);
         signupButton = findViewById(R.id.signup_button);
-        Fauth=FirebaseAuth.getInstance();
+        Fauth = FirebaseAuth.getInstance();
 
 
         rdb1_admin = findViewById(R.id.rdb1_admin);
         rdb2_user = findViewById(R.id.rdb1_user);
-        RadioGroup radioGroup = findViewById(R.id.radioGroup);
+
+        radioGroup= findViewById(R.id.radioGroup);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -125,13 +128,12 @@ public class SignupActivity extends AppCompatActivity {
         });
 
 
-
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK){
+                        if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             imageUri = data.getData();
                             uploadImageUser.setImageURI(imageUri);
@@ -155,90 +157,92 @@ public class SignupActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Firebase email authentication
-                progressBar.setVisibility(View.VISIBLE);
-                String email,password;
-                email=String.valueOf(signupEmail.getText());
-                password=String.valueOf(signupPassword.getText());
-                Fauth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(SignupActivity.this, "Signup Successfully", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = Fauth.getCurrentUser();
-                            user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG,"onFailure:Email not sent"+e.getMessage());
-                                }
-                            });
-                        }else {
-                            Toast.makeText(SignupActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                //
-                if (imageUri != null){
-//                    uploadToFirebase(imageUri);
-                    final StorageReference imageReference = storageReference.child("users/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
-
-
-                    imageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                if (valid()) {
+                    //Firebase email authentication
+                    progressBar.setVisibility(View.VISIBLE);
+                    String email, password;
+                    email = String.valueOf(signupEmail.getText());
+                    password = String.valueOf(signupPassword.getText());
+                    Fauth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-
-                                    String key = reference.push().getKey();
-//                                    reference.child(key).setValue(dataClass);
-                                    String name = signupName.getText().toString();
-                                    String email = signupEmail.getText().toString();
-                                    String username = signupUsername.getText().toString();
-                                    String password = signupPassword.getText().toString();
-                                    String role = selectedOption.toString();
-                                    HelperClass helperClass = new HelperClass(name, email, username, password,uri.toString(),role);
-                                    reference.child(username).setValue(helperClass);
-
-                                    progressBar.setVisibility(View.INVISIBLE);
-
-
-
-
-                                    Toast.makeText(SignupActivity.this, "You have signup successfully!", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-
-
-                                    startActivity(intent);
-                                }
-                            });
-                        }
-                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                            progressBar.setVisibility(View.VISIBLE);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(SignupActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(SignupActivity.this, "Signup Successfully", Toast.LENGTH_SHORT).show();
+                                FirebaseUser user = Fauth.getCurrentUser();
+                                user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG, "onFailure:Email not sent" + e.getMessage());
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(SignupActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
+                    //
+                    if (imageUri != null) {
+//                    uploadToFirebase(imageUri);
+                        final StorageReference imageReference = storageReference.child("users/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
 
+                        imageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
 
-                } else  {
-                    Toast.makeText(SignupActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+                                        String key = reference.push().getKey();
+//                                    reference.child(key).setValue(dataClass);
+                                        String name = signupName.getText().toString();
+                                        String email = signupEmail.getText().toString();
+                                        String username = signupUsername.getText().toString();
+                                        String password = signupPassword.getText().toString();
+                                        String role = selectedOption.toString();
+                                        HelperClass helperClass = new HelperClass(name, email, username, password, uri.toString(), role);
+                                        reference.child(username).setValue(helperClass);
+
+                                        progressBar.setVisibility(View.INVISIBLE);
+
+
+                                        Toast.makeText(SignupActivity.this, "You have signup successfully!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+
+
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                                progressBar.setVisibility(View.VISIBLE);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                Toast.makeText(SignupActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                    } else {
+                        Toast.makeText(SignupActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    valid();
                 }
-
             }
+
         });
         loginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,9 +253,9 @@ public class SignupActivity extends AppCompatActivity {
         });
 
 
-
     }
-    private void uploadToFirebase(Uri uri){
+
+    private void uploadToFirebase(Uri uri) {
 ////        String caption = uploadCaption.getText().toString();
 ////        String price = uploadPrice.getText().toString();
 //        final StorageReference imageReference = storageReference.child("users/" + System.currentTimeMillis() + "." + getFileExtension(uri));
@@ -287,9 +291,45 @@ public class SignupActivity extends AppCompatActivity {
 //            }
 //        });
     }
-    private String getFileExtension(Uri imageUri){
+
+    private String getFileExtension(Uri imageUri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(contentResolver.getType(imageUri));
+    }
+
+
+    boolean check;
+
+    boolean valid() {
+        String name = signupName.getText().toString();
+        String email = signupEmail.getText().toString();
+        String username = signupUsername.getText().toString();
+        String password = signupPassword.getText().toString();
+        if (name.isEmpty()) {
+            signupName.setError("Enter a Name");
+            check = false;
+        } else {
+            check = true;
+        }
+        if (email.isEmpty()) {
+            signupEmail.setError("Enter an E-Mail");
+            check = false;
+        } else {
+            check = true;
+        }
+        if (username.isEmpty()) {
+            signupUsername.setError("Enter an E-Mail");
+            check = false;
+        } else {
+            check = true;
+        }
+        if (password.isEmpty()) {
+            signupPassword.setError("Enter an E-Mail");
+            check = false;
+        } else {
+            check = true;
+        }
+        return check;
     }
 }

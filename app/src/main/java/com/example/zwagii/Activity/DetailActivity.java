@@ -32,13 +32,11 @@ public class DetailActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
-    String name;
-
-
+    String name,ab="1";
     private DataClass object;
     private Button addToCartBtn;
     ProgressBar progressBar;
-    private TextView plusBtn, minusBtn, titleTxt, feeTxt, descriptionTxt, numberOrderTxt, startTxt, calTxt, timeTxt;
+    private TextView plusBtn, minusBtn, titleTxt, feeTxt, descriptionTxt, numberOrderTxt, startTxt, calTxt, timeTxt,numberItemTxt;
     private ImageView picFood, backBtn;
     //    private Highadapter object;
     private int numberOrder = 1;
@@ -66,6 +64,9 @@ public class DetailActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                startActivity(new Intent(DetailActivity.this,MainActivity.class));
+
                 finish();
             }
         });
@@ -82,20 +83,36 @@ public class DetailActivity extends AppCompatActivity {
                 .load(firebaseImageUrl)
                 .into(picFood);
         titleTxt.setText(object.getTitle());
-        feeTxt.setText("$" + object.getPrice());
+        feeTxt.setText("₹" + object.getPrice());
         descriptionTxt.setText(object.getCaption());
         numberOrderTxt.setText("" + numberOrder);
         calTxt.setText(object.getEnergy() + "Cal");
         startTxt.setText(object.getScore() + "");
         timeTxt.setText(object.getTime() + "min");
-        Double a = Double.valueOf(object.getPrice());
-        addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * a));
+//        numberItemTxt.setText(object.getNumberInCart() + "");
+//        String a = String.valueOf(object.getPrice());
+//
+//
+//
+//        ab = String.valueOf(object.getPrice());
+//
+//        int aa = Integer.parseInt(a);
+//
+//        addToCartBtn.setText("Add to cart - ₹" + Math.round(numberOrder * aa));
+
+        ab = object.getPrice();
+        addToCartBtn.setText("Add to cart - ₹" + ab);
+
 
         plusBtn.setOnClickListener(v -> {
             numberOrder = numberOrder + 1;
             numberOrderTxt.setText("" + numberOrder);
-            Double b = Double.valueOf(object.getPrice());
-            addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * b));
+//            int b = Integer.parseInt(object.getPrice());
+            int b = Integer.parseInt(ab);
+            int temp=numberOrder * b;
+            ab = String.valueOf(temp);
+//                addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * b));
+            addToCartBtn.setText("Add to cart - ₹" + ab);
         });
 
         minusBtn.setOnClickListener(v -> {
@@ -104,8 +121,11 @@ public class DetailActivity extends AppCompatActivity {
             } else {
                 numberOrder = numberOrder - 1;
                 numberOrderTxt.setText("" + numberOrder);
-                Double c = Double.valueOf(object.getPrice());
-                addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * c));
+                int b = Integer.parseInt(object.getPrice());
+                int temp=numberOrder * b;
+                ab = String.valueOf(temp);
+//                addToCartBtn.setText("Add to cart - $" + Math.round(numberOrder * b));
+                addToCartBtn.setText("Add to cart - ₹" + ab);
             }
         });
 
@@ -119,13 +139,47 @@ public class DetailActivity extends AppCompatActivity {
             Intent intent=new Intent(DetailActivity.this,CartActivity.class);
             //intent.putExtra("title",object.getTitle());
 //            uploadToFirebase();
-            intent.putExtra("pri",object.getPrice());
+//            intent.putExtra("pri",object.getPrice());
 
 
             convertAndStoreImageURL();
+            String ur = object.getImageURL().toString();
+            // Convert string URL to Uri
+            Uri actualImageUrl = Uri.parse(ur);
+
+
+            String ab1 = object.getTitle().toString();
+            String pr1 = object.getPrice();
+            String pr = ab;
+            String sc = object.getScore();
+            String nm = String.valueOf(numberOrder);
+
+
+
+            // Get reference to the new subfolder where you want to store the actual URL
+            DatabaseReference newSubfolderRef = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("imageURL");
+            DatabaseReference newSubfolderRef1 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("title");
+            DatabaseReference newSubfolderRef2 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("price");
+            DatabaseReference newSubfolderRef3 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("score");
+            DatabaseReference newSubfolderRef4 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("numberInCart");
+            DatabaseReference newSubfolderRef5 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("totalPrice");
+
+            // Store the actual URL in the new subfolder
+            newSubfolderRef.setValue(actualImageUrl.toString());
+            newSubfolderRef1.setValue(ab1);
+            newSubfolderRef2.setValue(pr1);
+            newSubfolderRef3.setValue(sc);
+            newSubfolderRef4.setValue(nm);
+            newSubfolderRef5.setValue(pr);
+
             startActivity(intent);
+
+            finish();
+
         });
 
+        numberItemTxt.setText(numberOrder + "");
+//        numberItemTxt.setText(object.getNumberInCart() + "");
 
 
 
@@ -144,6 +198,7 @@ public class DetailActivity extends AppCompatActivity {
         startTxt = findViewById(R.id.StarTxt);
         calTxt = findViewById(R.id.calTxt);
         titleTxt = findViewById(R.id.titleTxt1);
+        numberItemTxt = findViewById(R.id.numberItemTxt);
     }
 
 
@@ -153,26 +208,33 @@ public class DetailActivity extends AppCompatActivity {
 
     public void convertAndStoreImageURL() {
 
-        String ur = object.getImageURL().toString();
-        // Convert string URL to Uri
-        Uri actualImageUrl = Uri.parse(ur);
-
-
-        String ab = object.getTitle().toString();
-        String pr = object.getPrice();
-        String sc = object.getScore();
-
-        // Get reference to the new subfolder where you want to store the actual URL
-        DatabaseReference newSubfolderRef = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("imageURL");
-        DatabaseReference newSubfolderRef1 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("title");
-        DatabaseReference newSubfolderRef2 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("price");
-        DatabaseReference newSubfolderRef3 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab).child("score");
-
-        // Store the actual URL in the new subfolder
-        newSubfolderRef.setValue(actualImageUrl.toString());
-        newSubfolderRef1.setValue(ab);
-        newSubfolderRef2.setValue(pr);
-        newSubfolderRef3.setValue(sc);
+//        String ur = object.getImageURL().toString();
+//        // Convert string URL to Uri
+//        Uri actualImageUrl = Uri.parse(ur);
+//
+//
+//        String ab1 = object.getTitle().toString();
+//        String pr1 = object.getPrice();
+//        String pr = ab;
+//        String sc = object.getScore();
+//        String nm = String.valueOf(numberOrder);
+//
+//
+//        // Get reference to the new subfolder where you want to store the actual URL
+//        DatabaseReference newSubfolderRef = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("imageURL");
+//        DatabaseReference newSubfolderRef1 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("title");
+//        DatabaseReference newSubfolderRef2 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("price");
+//        DatabaseReference newSubfolderRef3 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("score");
+//        DatabaseReference newSubfolderRef4 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("numberInCart");
+//        DatabaseReference newSubfolderRef5 = FirebaseDatabase.getInstance().getReference().child("users").child(name).child("AddToCart").child(ab1).child("totalPrice");
+//
+//        // Store the actual URL in the new subfolder
+//        newSubfolderRef.setValue(actualImageUrl.toString());
+//        newSubfolderRef1.setValue(ab1);
+//        newSubfolderRef2.setValue(pr1);
+//        newSubfolderRef3.setValue(sc);
+//        newSubfolderRef4.setValue(nm);
+//        newSubfolderRef5.setValue(pr);
 
     }
 

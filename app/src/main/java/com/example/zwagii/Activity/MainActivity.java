@@ -13,9 +13,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.ImageSlider;
@@ -34,7 +36,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     //    private RecyclerView.Adapter adapterFoodList;
-//    private RecyclerView recyclerViewFood;
+    //    private RecyclerView recyclerViewFood;
 
     String user, usern, userName, userEmail, userPassword;
     SharedPreferences sharedPreferences;
@@ -44,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
     String name, role;
     private RecyclerView recyclerView;
-    private ArrayList<DataClass> dataList;
+
+    TextView editTextTextPersonName;
     private HighAdapter adapter;
     final private DatabaseReference databaseReference_High = FirebaseDatabase.getInstance().getReference("Images");
 
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference usersRef;
     FirebaseAuth Fauth;
     Button logout;
-//    FirebaseUser user;
+    //    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        editTextTextPersonName = findViewById(R.id.editTextTextPersonName);
+
+        editTextTextPersonName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (role.matches("Admin")) {
+                    Intent intent = new Intent(MainActivity.this, MenuActivity_admin.class);
+                    String path = "Images";
+                    intent.putExtra("path", path);
+
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    String path = "Images";
+                    intent.putExtra("path", path);
+
+                    startActivity(intent);
+                }
+            }
+        });
+
 
         viewAll = findViewById(R.id.tvall);
 
@@ -74,12 +98,12 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
         name = sharedPreferences.getString(KEY_NAME, null);
-//        role = sharedPreferences.getString(KEY_ROLE, null);
-//
-//        if(name != null )
-//        {
-//            //tvuname.setText(name);
-//        }
+        //        role = sharedPreferences.getString(KEY_ROLE, null);
+        //
+        //        if(name != null )
+        //        {
+        //            //tvuname.setText(name);
+        //        }
 
 
         Fauth = FirebaseAuth.getInstance();
@@ -98,30 +122,33 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-//        user=Fauth.getCurrentUser();
-//        if (user==null){
-//            startActivity(new Intent(MainActivity.this,LoginActivity.class));
-//        }else {
-//            //tvuname.setText(user.getEmail());
-//            //showProfilePic.getImageAlpha();
-//        }
+        //        user=Fauth.getCurrentUser();
+        //        if (user==null){
+        //            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        //        }else {
+        //            //tvuname.setText(user.getEmail());
+        //            //showProfilePic.getImageAlpha();
+        //        }
 
         recyclerView = findViewById(R.id.recycler_high);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        dataList = new ArrayList<>();
-        adapter = new HighAdapter(this, dataList);
-        recyclerView.setAdapter(adapter);
+
 
         databaseReference_High.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                ArrayList<DataClass> dataList=new ArrayList<>();
+
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     DataClass dataClass = dataSnapshot.getValue(DataClass.class);
                     dataList.add(dataClass);
                 }
-                adapter.notifyDataSetChanged();
+                adapter = new HighAdapter(MainActivity.this, dataList);
+                recyclerView.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -138,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
 
         ImageSlider imageSlider = findViewById(R.id.image_slider);
         imageSlider.setImageList(imageList);
-
+        
+        
 
         showProfilePic = findViewById(R.id.imageView);
         tvuname = findViewById(R.id.textView2);
@@ -149,8 +177,8 @@ public class MainActivity extends AppCompatActivity {
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
         // Replace "desiredUsername" with the username you want to fetch the image for
-//        Intent intent = getIntent();
-//        usernameUser = intent.getStringExtra("username");
+        //        Intent intent = getIntent();
+        //        usernameUser = intent.getStringExtra("username");
         tvuname.setText(name);
         String desiredUsername = name;
 
@@ -203,12 +231,12 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout cat_hotdog = findViewById(R.id.cat_hotdog);
         ConstraintLayout cat_drinks = findViewById(R.id.cat_drinks);
 
-//        homeBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this,MainActivity.class));
-//            }
-//        });
+        //        homeBtn.setOnClickListener(new View.OnClickListener() {
+        //            @Override
+        //            public void onClick(View v) {
+        //                startActivity(new Intent(MainActivity.this,MainActivity.class));
+        //            }
+        //        });
 
 
         cat_pizza.setOnClickListener(new View.OnClickListener() {
@@ -260,11 +288,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-//                String path = "Images";
-//                intent.putExtra("path", path);
-//
-//                startActivity(intent);
+                //                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                //                String path = "Images";
+                //                intent.putExtra("path", path);
+                //
+                //                startActivity(intent);
 
                 if (role.matches("Admin")) {
                     Intent intent = new Intent(MainActivity.this, MenuActivity_admin.class);
@@ -287,10 +315,19 @@ public class MainActivity extends AppCompatActivity {
         viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                String path = "Images";
-                intent.putExtra("path", path);
-                startActivity(intent);
+                if (role.matches("Admin")) {
+                    Intent intent = new Intent(MainActivity.this, MenuActivity_admin.class);
+                    String path = "Images";
+                    intent.putExtra("path", path);
+
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    String path = "Images";
+                    intent.putExtra("path", path);
+
+                    startActivity(intent);
+                }
             }
         });
 
@@ -304,21 +341,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerview() {
-//        ArrayList<FoodDomain> items = new ArrayList<>();
-//        items.add(new FoodDomain("Cheese Burger","Satisfy your cravings with our juicy Cheese Burger. \n"+
-//                "Made with 100% Angus beef patty and topped with\n"+
-//                " melted cheddar cheese, fresh lettuce, tomato, and\n"+
-//                " our secret sauce, this classic burger will leave you\n"+
-//                " wanting more. Served with crispy fries and a drink,\n"+
-//                " it's the perfect meal for any occasion.","fast_1",15,20,120,4));
-//        items.add(new FoodDomain("Pizza Peperoni","Get a taste of Italy with our delicious peperoni pizza. Made with freshly rolled dough, zesty tomato sauce, mozzarella cheese, and topped with spicy pepperoni Slices, this pizza is sure to be a crowd Pleaser. Perfectly baked in a wood-fired oven, it's the perfect choice for a quick lunch or a family dinner.","fast_2",10,25,200,5));
-//        items.add(new FoodDomain("Vegetable Pizza","looking for a healthier option? Try our vegetable pizza, made with a variety of a fresh veggies such as bell peppers, onions, mushrooms, olives, and tomatoes. Topped with mozzarella cheese and a tangy tomato sauce, this pizza is full of flavor and goodness. Perfect for a vegetarians and anyone who wants to add more greens to their diet.","fast_3",13,30,100,4.5));
-//
-//        recyclerViewFood = findViewById(R.id.view1);
-//        recyclerViewFood.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-//
-//        adapterFoodList = new FoodListAdapter(items);
-//        recyclerViewFood.setAdapter(adapterFoodList);
+        //        ArrayList<FoodDomain> items = new ArrayList<>();
+        //        items.add(new FoodDomain("Cheese Burger","Satisfy your cravings with our juicy Cheese Burger. \n"+
+        //                "Made with 100% Angus beef patty and topped with\n"+
+        //                " melted cheddar cheese, fresh lettuce, tomato, and\n"+
+        //                " our secret sauce, this classic burger will leave you\n"+
+        //                " wanting more. Served with crispy fries and a drink,\n"+
+        //                " it's the perfect meal for any occasion.","fast_1",15,20,120,4));
+        //        items.add(new FoodDomain("Pizza Peperoni","Get a taste of Italy with our delicious peperoni pizza. Made with freshly rolled dough, zesty tomato sauce, mozzarella cheese, and topped with spicy pepperoni Slices, this pizza is sure to be a crowd Pleaser. Perfectly baked in a wood-fired oven, it's the perfect choice for a quick lunch or a family dinner.","fast_2",10,25,200,5));
+        //        items.add(new FoodDomain("Vegetable Pizza","looking for a healthier option? Try our vegetable pizza, made with a variety of a fresh veggies such as bell peppers, onions, mushrooms, olives, and tomatoes. Topped with mozzarella cheese and a tangy tomato sauce, this pizza is full of flavor and goodness. Perfect for a vegetarians and anyone who wants to add more greens to their diet.","fast_3",13,30,100,4.5));
+        //
+        //        recyclerViewFood = findViewById(R.id.view1);
+        //        recyclerViewFood.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        //
+        //        adapterFoodList = new FoodListAdapter(items);
+        //        recyclerViewFood.setAdapter(adapterFoodList);
     }
 
     public void onBackPressed() {

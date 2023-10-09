@@ -40,9 +40,14 @@ public class HighAdapter extends RecyclerView.Adapter<HighAdapter.MyViewHolder> 
 //        String pr = String.valueOf(dataList.get(position).getPrice());
         holder.recyclerCaption.setText(dataList.get(position).getTitle());
 //        holder.recyclerPrice.setText(pr);
-        //String sc = String.valueOf(dataList.get(position).getScore());
+        //String sc = String.valueOf(dataList.get(pos   ition).getScore());
         //holder.recyclerScore.setText(sc);
-        holder.recyclerPrice.setText(dataList.get(position).getPrice());
+
+
+        String a = String.valueOf(dataList.get(position).getTime());
+        holder.recyclerPrice.setText(a+ "min");
+//        holder.recyclerPrice.setText(dataList.get(position).getPrice());
+        holder.recyclerScore.setText(dataList.get(position).getScore());
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +73,7 @@ public class HighAdapter extends RecyclerView.Adapter<HighAdapter.MyViewHolder> 
             recyclerImage = itemView.findViewById(R.id.pic);
             recyclerCaption = itemView.findViewById(R.id.titleTxt1);
             recyclerPrice = itemView.findViewById(R.id.timeTxt);
+            recyclerScore = itemView.findViewById(R.id.scoreTxt);
             //recyclerScore = itemView.findViewById(R.id.totalEachItem);
 
 

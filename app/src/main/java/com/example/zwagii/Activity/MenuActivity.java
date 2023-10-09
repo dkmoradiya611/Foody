@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.example.zwagii.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -126,7 +127,7 @@ public class MenuActivity extends AppCompatActivity {
     public void searchlist(String text){
         ArrayList<DataClass> searchlist=new ArrayList<>();
         for(DataClass dataClass:dataList){
-            if (dataClass.getCaption().toLowerCase().contains(text.toLowerCase())){
+            if (dataClass.getTitle().toLowerCase().contains(text.toLowerCase())){
                 searchlist.add(dataClass);
             }
         }

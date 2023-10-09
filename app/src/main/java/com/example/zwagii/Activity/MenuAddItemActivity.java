@@ -44,14 +44,13 @@ public class MenuAddItemActivity extends AppCompatActivity {
     String item;
 
 
-
     private FloatingActionButton uploadButton;
     private ImageView uploadImage;
-    EditText uploadTitle,uploadCaption,uploadPrice,uploadTime,uploadEnergy,uploadScore;
+    EditText uploadTitle, uploadCaption, uploadPrice, uploadTime, uploadEnergy, uploadScore;
     ProgressBar progressBar;
     private Uri imageUri;
-     DatabaseReference databaseReference;
-      StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    DatabaseReference databaseReference;
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,18 +58,16 @@ public class MenuAddItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_add_item);
 
 
-
-
-        spinner =findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
 
         items = new ArrayList<>();
-        items.add(0,"Food Category");
+        items.add(0, "Food Category");
         items.add("Pizza");
         items.add("Burger");
         items.add("Hotdog");
         items.add("Drinks");
         items.add("General");
-        spinner.setAdapter(new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,items));
+        spinner.setAdapter(new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, items));
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -79,13 +76,12 @@ public class MenuAddItemActivity extends AppCompatActivity {
                 //item = items.get(position);
 
                 //2nd Method
-                if(!(spinner.getSelectedItem().toString() == "Food Category"))
-                {
+                if (!(spinner.getSelectedItem().toString() == "Food Category")) {
                     item = spinner.getSelectedItem().toString();
                     Toast.makeText(MenuAddItemActivity.this, item, Toast.LENGTH_SHORT).show();
 
-                }else {
-
+                } else {
+                    valid();
                 }
 
             }
@@ -95,12 +91,6 @@ public class MenuAddItemActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
 
         uploadButton = findViewById(R.id.uploadButton);
         uploadTitle = findViewById(R.id.uploadTitle);
@@ -119,7 +109,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK){
+                        if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             imageUri = data.getData();
                             uploadImage.setImageURI(imageUri);
@@ -128,7 +118,6 @@ public class MenuAddItemActivity extends AppCompatActivity {
                         }
                     }
                 }
-
 
 
         );
@@ -144,16 +133,20 @@ public class MenuAddItemActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (imageUri != null){
+                if (imageUri != null) {
                     uploadToFirebase(imageUri);
-                } else  {
+                } else {
                     Toast.makeText(MenuAddItemActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+                }
+                if (!valid()) {
+                    valid();
                 }
             }
         });
     }
     //Outside onCreate
-    private void uploadToFirebase(Uri imageUri){
+
+    private void uploadToFirebase(Uri imageUri) {
 
         if (spinner.getSelectedItem().toString() == "General") {
 
@@ -176,7 +169,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                     imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(), caption.toString(), price, time, energy, score);
                             databaseReference = FirebaseDatabase.getInstance().getReference("Images");
                             String key = databaseReference.push().getKey();
                             databaseReference.child(title).setValue(dataClass);
@@ -201,8 +194,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                 }
             });
 
-        }
-        else if (spinner.getSelectedItem().toString() == "Pizza") {
+        } else if (spinner.getSelectedItem().toString() == "Pizza") {
 
             String title = uploadTitle.getText().toString();
             String caption = uploadCaption.getText().toString();
@@ -223,7 +215,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                     imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(), caption.toString(), price, time, energy, score);
                             databaseReference = FirebaseDatabase.getInstance().getReference("Images");
                             String key = databaseReference.push().getKey();
                             databaseReference.child(title).setValue(dataClass);
@@ -249,8 +241,6 @@ public class MenuAddItemActivity extends AppCompatActivity {
             });
 
 
-
-
             StorageReference imageReference2 = storageReference.child("pizza/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
 
@@ -260,7 +250,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                     imageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(), caption.toString(), price, time, energy, score);
                             databaseReference = FirebaseDatabase.getInstance().getReference("Pizzas");
                             String key = databaseReference.push().getKey();
                             databaseReference.child(title).setValue(dataClass);
@@ -285,7 +275,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                 }
             });
 
-        }else if (spinner.getSelectedItem().toString() == "Burger") {
+        } else if (spinner.getSelectedItem().toString() == "Burger") {
 
             String title = uploadTitle.getText().toString();
             String caption = uploadCaption.getText().toString();
@@ -306,7 +296,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                     imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(), caption.toString(), price, time, energy, score);
                             databaseReference = FirebaseDatabase.getInstance().getReference("Images");
                             String key = databaseReference.push().getKey();
                             databaseReference.child(title).setValue(dataClass);
@@ -332,8 +322,6 @@ public class MenuAddItemActivity extends AppCompatActivity {
             });
 
 
-
-
             StorageReference imageReference2 = storageReference.child("burger/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
 
@@ -343,7 +331,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                     imageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(), caption.toString(), price, time, energy, score);
                             databaseReference = FirebaseDatabase.getInstance().getReference("Burgers");
                             String key = databaseReference.push().getKey();
                             databaseReference.child(title).setValue(dataClass);
@@ -368,7 +356,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                 }
             });
 
-        }else if (spinner.getSelectedItem().toString() == "Hotdog") {
+        } else if (spinner.getSelectedItem().toString() == "Hotdog") {
 
             String title = uploadTitle.getText().toString();
             String caption = uploadCaption.getText().toString();
@@ -389,7 +377,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                     imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(), caption.toString(), price, time, energy, score);
                             databaseReference = FirebaseDatabase.getInstance().getReference("Images");
                             String key = databaseReference.push().getKey();
                             databaseReference.child(title).setValue(dataClass);
@@ -415,8 +403,6 @@ public class MenuAddItemActivity extends AppCompatActivity {
             });
 
 
-
-
             StorageReference imageReference2 = storageReference.child("hotdog/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
 
@@ -426,7 +412,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                     imageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(), caption.toString(), price, time, energy, score);
                             databaseReference = FirebaseDatabase.getInstance().getReference("Hotdog");
                             String key = databaseReference.push().getKey();
                             databaseReference.child(title).setValue(dataClass);
@@ -451,7 +437,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                 }
             });
 
-        }else if (spinner.getSelectedItem().toString() == "Drinks") {
+        } else if (spinner.getSelectedItem().toString() == "Drinks") {
 
             String title = uploadTitle.getText().toString();
             String caption = uploadCaption.getText().toString();
@@ -472,7 +458,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                     imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(), caption.toString(), price, time, energy, score);
                             databaseReference = FirebaseDatabase.getInstance().getReference("Images");
                             String key = databaseReference.push().getKey();
                             databaseReference.child(title).setValue(dataClass);
@@ -498,8 +484,6 @@ public class MenuAddItemActivity extends AppCompatActivity {
             });
 
 
-
-
             StorageReference imageReference2 = storageReference.child("drinks/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
 
@@ -509,7 +493,7 @@ public class MenuAddItemActivity extends AppCompatActivity {
                     imageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            DataClass dataClass = new DataClass(title.toString(), uri.toString(),caption.toString(), price, time, energy, score);
+                            DataClass dataClass = new DataClass(title.toString(), uri.toString(), caption.toString(), price, time, energy, score);
                             databaseReference = FirebaseDatabase.getInstance().getReference("Drinks");
                             String key = databaseReference.push().getKey();
                             databaseReference.child(title).setValue(dataClass);
@@ -535,18 +519,72 @@ public class MenuAddItemActivity extends AppCompatActivity {
             });
 
         }
-
-
-
-
-
-
-
     }
-    private String getFileExtension(Uri imageUri){
+
+    private String getFileExtension(Uri imageUri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(contentResolver.getType(imageUri));
+    }
+
+    boolean check;
+
+    boolean valid() {
+        String title = uploadTitle.getText().toString();
+        String caption = uploadCaption.getText().toString();
+        //String price = uploadPrice.getText().toString();
+        String price = uploadPrice.getText().toString();
+//        Double price = Double.valueOf(uploadPrice.getText().toString());
+        String time = uploadTime.getText().toString();
+        String energy = uploadEnergy.getText().toString();
+        String score = uploadScore.getText().toString();
+
+
+        if (title.isEmpty()) {
+            uploadTitle.setError("Enter a Title");
+            check = false;
+        } else {
+            check = true;
+        }
+        if (caption.isEmpty()) {
+            uploadCaption.setError("Enter a Caption");
+            check = false;
+        } else {
+            check = true;
+        }
+        if (price.isEmpty()) {
+            uploadPrice.setError("Enter a Price");
+            check = false;
+        } else {
+            check = true;
+        }
+        if (time.isEmpty()) {
+            uploadTime.setError("Enter a Minutes");
+            check = false;
+        } else {
+            check = true;
+        }
+        if (energy.isEmpty()) {
+            uploadEnergy.setError("Enter a Calorie");
+            check = false;
+        } else {
+            check = true;
+        }
+        if (score.isEmpty()) {
+            uploadScore.setError("Enter a Rating");
+            check = false;
+        } else {
+            check = true;
+        }
+        if (spinner.getSelectedItem().toString() == "Food Category") {
+            Toast.makeText(MenuAddItemActivity.this,"Please select Category", Toast.LENGTH_SHORT).show();
+            check=false;
+        }
+        else {
+            check=true;
+        }
+
+        return check;
     }
 }
 
